@@ -1,0 +1,5 @@
+{
+    "require": {
+        "antishov/doctrine-extensions-bundle": "^1.4"
+    }
+}
