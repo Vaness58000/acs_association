@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProduitsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,6 +65,22 @@ class Produits
      * @ORM\JoinColumn(nullable=false)
      */
     private $users;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=AddFiles::class, mappedBy="produits")
+     */
+    private $addFiles;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Images::class, mappedBy="produits")
+     */
+    private $images;
+
+    public function __construct()
+    {
+        $this->addFiles = new ArrayCollection();
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -173,6 +191,60 @@ class Produits
     public function setUsers(?users $users): self
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AddFiles>
+     */
+    public function getAddFiles(): Collection
+    {
+        return $this->addFiles;
+    }
+
+    public function addAddFile(AddFiles $addFile): self
+    {
+        if (!$this->addFiles->contains($addFile)) {
+            $this->addFiles[] = $addFile;
+            $addFile->addProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAddFile(AddFiles $addFile): self
+    {
+        if ($this->addFiles->removeElement($addFile)) {
+            $addFile->removeProduit($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->addProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            $image->removeProduit($this);
+        }
 
         return $this;
     }
