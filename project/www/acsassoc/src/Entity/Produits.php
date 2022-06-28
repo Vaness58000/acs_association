@@ -153,14 +153,14 @@ class Produits
         return $this;
     }
 
-    public function getCategoriesId(): ?categories
+    public function getCategories(): ?categories
     {
-        return $this->categories_id;
+        return $this->categories;
     }
 
-    public function setCategoriesId(?categories $categories_id): self
+    public function setCategoriesId(?categories $categories): self
     {
-        $this->categories_id = $categories_id;
+        $this->categories = $categories;
 
         return $this;
     }
