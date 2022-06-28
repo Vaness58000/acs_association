@@ -30,7 +30,7 @@ class Categories
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity=Produits::class, mappedBy="categories_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Produits::class, mappedBy="categories", orphanRemoval=true)
      */
     private $produits;
 
@@ -80,7 +80,7 @@ class Categories
     {
         if (!$this->produits->contains($produit)) {
             $this->produits[] = $produit;
-            $produit->setCategoriesId($this);
+            $produit->setCategories($this);
         }
 
         return $this;
@@ -90,8 +90,8 @@ class Categories
     {
         if ($this->produits->removeElement($produit)) {
             // set the owning side to null (unless already changed)
-            if ($produit->getCategoriesId() === $this) {
-                $produit->setCategoriesId(null);
+            if ($produit->getCategories() === $this) {
+                $produit->setCategories(null);
             }
         }
 
