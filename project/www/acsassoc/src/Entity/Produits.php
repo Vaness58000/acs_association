@@ -56,7 +56,7 @@ class Produits
      * @ORM\ManyToOne(targetEntity=categories::class, inversedBy="produits")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $categories;
+    private $categories_id;
 
     /**
      * @ORM\ManyToOne(targetEntity=users::class, inversedBy="produits")
@@ -153,14 +153,14 @@ class Produits
         return $this;
     }
 
-    public function getCategories(): ?categories
+    public function getCategoriesId(): ?categories
     {
-        return $this->categories;
+        return $this->categories_id;
     }
 
-    public function setCategories(?categories $categories): self
+    public function setCategoriesId(?categories $categories_id): self
     {
-        $this->categories = $categories;
+        $this->categories_id = $categories_id;
 
         return $this;
     }
