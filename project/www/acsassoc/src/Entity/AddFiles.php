@@ -30,7 +30,7 @@ class AddFiles
     private $src;
 
     /**
-     * @ORM\ManyToMany(targetEntity=produits::class, inversedBy="addFiles")
+     * @ORM\ManyToMany(targetEntity=Produits::class, inversedBy="addFiles")
      */
     private $produits;
 
@@ -74,7 +74,7 @@ class AddFiles
     }
 
     /**
-     * @return Collection<int, produits>
+     * @return Collection<int, Produits>
      */
     public function getProduits(): Collection
     {
@@ -90,7 +90,7 @@ class AddFiles
         return $this;
     }
 
-    public function removeProduit(produits $produit): self
+    public function removeProduit(Produits $produit): self
     {
         $this->produits->removeElement($produit);
 
