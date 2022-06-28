@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TypeFile{% endblock %}
+
+{% block body %}
+    <h1>Create new TypeFile</h1>
+
+    {{ include('type_file/_form.html.twig') }}
+
+    <a href="{{ path('app_type_file_index') }}">back to list</a>
+{% endblock %}

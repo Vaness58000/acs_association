@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TypeFile{% endblock %}
+
+{% block body %}
+    <h1>Edit TypeFile</h1>
+
+    {{ include('type_file/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_type_file_index') }}">back to list</a>
+
+    {{ include('type_file/_delete_form.html.twig') }}
+{% endblock %}
