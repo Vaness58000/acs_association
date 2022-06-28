@@ -57,24 +57,24 @@ class Produits
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="produits")
+     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="Produits")
      * @ORM\JoinColumn(nullable=false)
      */
     private $categories;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="produits")
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="Produits")
      * @ORM\JoinColumn(nullable=false)
      */
     private $users;
 
     /**
-     * @ORM\ManyToMany(targetEntity=AddFiles::class, mappedBy="produits")
+     * @ORM\ManyToMany(targetEntity=AddFiles::class, mappedBy="Produits")
      */
     private $addFiles;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Images::class, mappedBy="produits")
+     * @ORM\ManyToMany(targetEntity=Images::class, mappedBy="Produits")
      */
     private $images;
 

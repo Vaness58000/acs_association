@@ -32,7 +32,7 @@ class Categories
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity=Produits::class, mappedBy="categories", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Produits::class, mappedBy="Categories", orphanRemoval=true)
      */
     private $produits;
 
