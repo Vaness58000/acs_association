@@ -75,7 +75,7 @@ class Produits
     private $created_at;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="produits")
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="produits", orphanRemoval=true, cascade={"persist"})
      */
     private $images;
 

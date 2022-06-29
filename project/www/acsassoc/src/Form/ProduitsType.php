@@ -27,11 +27,6 @@ class ProduitsType extends AbstractType
                 'class' => Categories::class,
                 'choice_label' => 'name'
             ])
-            ->add('addFiles', EntityType::class, [
-                'class' => AddFiles::class,
-                'choice_label' => 'name',
-                'mapped' => false
-            ])
             ->add('images', FileType::class, [
                 'label' => false,
                 'multiple' => true,
