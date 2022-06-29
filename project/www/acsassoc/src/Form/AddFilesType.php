@@ -3,6 +3,10 @@
 namespace App\Form;
 
 use App\Entity\AddFiles;
+use App\Entity\Produits;
+use App\Entity\TypeFile;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -12,10 +16,18 @@ class AddFilesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('src')
-            ->add('produits')
-            ->add('type_file')
+            ->add('name', TextType::class)
+            ->add('src', TextType::class)
+            ->add('produits', EntityType::class, [
+                'class' => Produits::class,
+                'choice_label' => 'name',
+                'mapped' => false
+            ])
+            ->add('type_file', EntityType::class, [
+                'class' => TypeFile::class,
+                'choice_label' => 'name',
+                'mapped' => false
+            ])
         ;
     }
 

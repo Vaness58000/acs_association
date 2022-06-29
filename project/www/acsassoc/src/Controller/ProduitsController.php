@@ -35,6 +35,7 @@ class ProduitsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $produit->setUsers($this->getUser());
             $produitsRepository->add($produit, true);
 
             return $this->redirectToRoute('app_produits_index', [], Response::HTTP_SEE_OTHER);
@@ -65,6 +66,7 @@ class ProduitsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $produit->setUsers($this->getUser());
             $produitsRepository->add($produit, true);
 
             return $this->redirectToRoute('app_produits_index', [], Response::HTTP_SEE_OTHER);
