@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\AddFilesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,19 +28,14 @@ class AddFiles
     private $src;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Produits::class, inversedBy="addFiles")
+     * @ORM\ManyToOne(targetEntity=Produits::class, inversedBy="addFiles")
      */
     private $produits;
 
     /**
      * @ORM\ManyToOne(targetEntity=TypeFile::class, inversedBy="addFiles")
      */
-    private $type_file;
-
-    public function __construct()
-    {
-        $this->produits = new ArrayCollection();
-    }
+    private $type;
 
     public function getId(): ?int
     {
@@ -73,38 +66,26 @@ class AddFiles
         return $this;
     }
 
-    /**
-     * @return Collection<int, Produits>
-     */
-    public function getProduits(): Collection
+    public function getProduits(): ?Produits
     {
         return $this->produits;
     }
 
-    public function addProduit(produits $produit): self
+    public function setProduits(?Produits $produits): self
     {
-        if (!$this->produits->contains($produit)) {
-            $this->produits[] = $produit;
-        }
+        $this->produits = $produits;
 
         return $this;
     }
 
-    public function removeProduit(Produits $produit): self
+    public function getType(): ?TypeFile
     {
-        $this->produits->removeElement($produit);
-
-        return $this;
+        return $this->type;
     }
 
-    public function getTypeFile(): ?TypeFile
+    public function setType(?TypeFile $type): self
     {
-        return $this->type_file;
-    }
-
-    public function setTypeFile(?TypeFile $type_file): self
-    {
-        $this->type_file = $type_file;
+        $this->type = $type;
 
         return $this;
     }

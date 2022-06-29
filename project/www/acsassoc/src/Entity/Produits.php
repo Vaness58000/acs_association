@@ -69,25 +69,25 @@ class Produits
     private $users;
 
     /**
-     * @ORM\ManyToMany(targetEntity=AddFiles::class, mappedBy="Produits")
-     */
-    private $addFiles;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Images::class, mappedBy="roduits")
-     */
-    private $images;
-
-    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $created_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="produits")
+     */
+    private $images;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AddFiles::class, mappedBy="produits")
+     */
+    private $addFiles;
+
     public function __construct()
     {
-        $this->addFiles = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->addFiles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -196,31 +196,9 @@ class Produits
         return $this;
     }
 
-    /**
-     * @return Collection<int, AddFiles>
-     */
-    public function getAddFiles(): Collection
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->addFiles;
-    }
-
-    public function addAddFile(AddFiles $addFile): self
-    {
-        if (!$this->addFiles->contains($addFile)) {
-            $this->addFiles[] = $addFile;
-            $addFile->addProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAddFile(AddFiles $addFile): self
-    {
-        if ($this->addFiles->removeElement($addFile)) {
-            $addFile->removeProduit($this);
-        }
-
-        return $this;
+        return $this->created_at;
     }
 
     /**
@@ -235,7 +213,7 @@ class Produits
     {
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
-            $image->addProduit($this);
+            $image->setProduits($this);
         }
 
         return $this;
@@ -244,15 +222,43 @@ class Produits
     public function removeImage(Images $image): self
     {
         if ($this->images->removeElement($image)) {
-            $image->removeProduit($this);
+            // set the owning side to null (unless already changed)
+            if ($image->getProduits() === $this) {
+                $image->setProduits(null);
+            }
         }
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    /**
+     * @return Collection<int, AddFiles>
+     */
+    public function getAddFiles(): Collection
     {
-        return $this->created_at;
+        return $this->addFiles;
+    }
+
+    public function addAddFile(AddFiles $addFile): self
+    {
+        if (!$this->addFiles->contains($addFile)) {
+            $this->addFiles[] = $addFile;
+            $addFile->setProduits($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAddFile(AddFiles $addFile): self
+    {
+        if ($this->addFiles->removeElement($addFile)) {
+            // set the owning side to null (unless already changed)
+            if ($addFile->getProduits() === $this) {
+                $addFile->setProduits(null);
+            }
+        }
+
+        return $this;
     }
     
 }
