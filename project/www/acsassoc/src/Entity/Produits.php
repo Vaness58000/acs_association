@@ -74,7 +74,7 @@ class Produits
     private $addFiles;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Images::class, mappedBy="Produits")
+     * @ORM\ManyToMany(targetEntity=Images::class, mappedBy="roduits")
      */
     private $images;
 
