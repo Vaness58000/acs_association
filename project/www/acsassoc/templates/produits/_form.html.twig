@@ -2,7 +2,7 @@
     {{ form_widget(form) }}
 
     {#verifier si la route est "produits_edit" on affiche les images#}
-    {% if app.request.attributes.get('_route') == 'produits_edit' %}
+    {% if app.request.attributes.get('_route') == 'app_produits_edit' %}
         <h2>Images</h2>
         {% for image in produit.images %}
             <div>
