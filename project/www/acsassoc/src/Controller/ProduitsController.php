@@ -107,6 +107,7 @@ class ProduitsController extends AbstractController
                           //On stock image dans la base de données (son nom)
                           $img = new Images();
                           $img->setName($fichier);
+                          $img->setSrc($fichier);
                           $produit->addImage($img);
                       }
           
