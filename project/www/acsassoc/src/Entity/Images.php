@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ImagesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,14 +28,9 @@ class Images
     private $src;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Produits::class, inversedBy="images")
+     * @ORM\ManyToOne(targetEntity=Produits::class, inversedBy="images")
      */
     private $produits;
-
-    public function __construct()
-    {
-        $this->produits = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -68,26 +61,14 @@ class Images
         return $this;
     }
 
-    /**
-     * @return Collection<int, Produits>
-     */
-    public function getProduits(): Collection
+    public function getProduits(): ?Produits
     {
         return $this->produits;
     }
 
-    public function addProduit(Produits $produit): self
+    public function setProduits(?Produits $produits): self
     {
-        if (!$this->produits->contains($produit)) {
-            $this->produits[] = $produit;
-        }
-
-        return $this;
-    }
-
-    public function removeProduit(Produits $produit): self
-    {
-        $this->produits->removeElement($produit);
+        $this->produits = $produits;
 
         return $this;
     }

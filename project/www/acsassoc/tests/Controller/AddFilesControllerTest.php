@@ -47,7 +47,7 @@ class AddFilesControllerTest extends WebTestCase
             'add_file[name]' => 'Testing',
             'add_file[src]' => 'Testing',
             'add_file[produits]' => 'Testing',
-            'add_file[type_file]' => 'Testing',
+            'add_file[type]' => 'Testing',
         ]);
 
         self::assertResponseRedirects('/add/files/');
@@ -62,7 +62,7 @@ class AddFilesControllerTest extends WebTestCase
         $fixture->setName('My Title');
         $fixture->setSrc('My Title');
         $fixture->setProduits('My Title');
-        $fixture->setType_file('My Title');
+        $fixture->setType('My Title');
 
         $this->repository->add($fixture, true);
 
@@ -81,7 +81,7 @@ class AddFilesControllerTest extends WebTestCase
         $fixture->setName('My Title');
         $fixture->setSrc('My Title');
         $fixture->setProduits('My Title');
-        $fixture->setType_file('My Title');
+        $fixture->setType('My Title');
 
         $this->repository->add($fixture, true);
 
@@ -91,7 +91,7 @@ class AddFilesControllerTest extends WebTestCase
             'add_file[name]' => 'Something New',
             'add_file[src]' => 'Something New',
             'add_file[produits]' => 'Something New',
-            'add_file[type_file]' => 'Something New',
+            'add_file[type]' => 'Something New',
         ]);
 
         self::assertResponseRedirects('/add/files/');
@@ -101,7 +101,7 @@ class AddFilesControllerTest extends WebTestCase
         self::assertSame('Something New', $fixture[0]->getName());
         self::assertSame('Something New', $fixture[0]->getSrc());
         self::assertSame('Something New', $fixture[0]->getProduits());
-        self::assertSame('Something New', $fixture[0]->getType_file());
+        self::assertSame('Something New', $fixture[0]->getType());
     }
 
     public function testRemove(): void
@@ -114,7 +114,7 @@ class AddFilesControllerTest extends WebTestCase
         $fixture->setName('My Title');
         $fixture->setSrc('My Title');
         $fixture->setProduits('My Title');
-        $fixture->setType_file('My Title');
+        $fixture->setType('My Title');
 
         $this->repository->add($fixture, true);
 

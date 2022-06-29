@@ -25,9 +25,10 @@ class TypeFile
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=AddFiles::class, mappedBy="type_file")
+     * @ORM\OneToMany(targetEntity=AddFiles::class, mappedBy="type")
      */
     private $addFiles;
+    
 
     public function __construct()
     {
@@ -63,7 +64,7 @@ class TypeFile
     {
         if (!$this->addFiles->contains($addFile)) {
             $this->addFiles[] = $addFile;
-            $addFile->setTypeFile($this);
+            $addFile->setType($this);
         }
 
         return $this;
@@ -73,8 +74,8 @@ class TypeFile
     {
         if ($this->addFiles->removeElement($addFile)) {
             // set the owning side to null (unless already changed)
-            if ($addFile->getTypeFile() === $this) {
-                $addFile->setTypeFile(null);
+            if ($addFile->getType() === $this) {
+                $addFile->setType(null);
             }
         }
 
