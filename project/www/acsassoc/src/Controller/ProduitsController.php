@@ -35,6 +35,23 @@ class ProduitsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // On récupère les images transmises
+            $images = $form->get('images')->getData();
+
+            //On boucle sur les images
+            foreach($images as $image){
+                //On génére un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                //On va copier le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+
+                //On stock image dans la base de données (son nom)
+                
+            }
+
             $produit->setUsers($this->getUser());
             $produitsRepository->add($produit, true);
 
