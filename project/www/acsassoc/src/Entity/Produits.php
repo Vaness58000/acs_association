@@ -84,6 +84,16 @@ class Produits
      */
     private $addFiles;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $manuel_src;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $ticket_src;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -257,6 +267,30 @@ class Produits
                 $addFile->setProduits(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getManuelSrc(): ?string
+    {
+        return $this->manuel_src;
+    }
+
+    public function setManuelSrc(string $manuel_src): self
+    {
+        $this->manuel_src = $manuel_src;
+
+        return $this;
+    }
+
+    public function getTicketSrc(): ?string
+    {
+        return $this->ticket_src;
+    }
+
+    public function setTicketSrc(string $ticket_src): self
+    {
+        $this->ticket_src = $ticket_src;
 
         return $this;
     }

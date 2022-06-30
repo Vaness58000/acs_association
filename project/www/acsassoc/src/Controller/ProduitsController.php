@@ -40,6 +40,12 @@ class ProduitsController extends AbstractController
             // On récupère les images transmises
             $images = $form->get('images')->getData();
 
+            // On récupère le manuel transmise
+            $manuel = $form->get('manuel_src')->getData();
+
+            // On récupère le ticket transmise
+            $ticket = $form->get('ticket_src')->getData();
+
             $produit->setActive(true);
             $produit->setUsers($this->getUser());
 
