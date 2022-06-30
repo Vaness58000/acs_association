@@ -46,6 +46,8 @@ class ProduitsController extends AbstractController
             // On récupère le ticket transmise
             $ticket = $form->get('ticket_src')->getData();
 
+            
+
             $produit->setActive(true);
             $produit->setUsers($this->getUser());
 
