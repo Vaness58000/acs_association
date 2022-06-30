@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Produits;
 use App\Entity\Categories;
+use App\Entity\TypeFile;
 use App\Entity\AddFiles;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,6 +18,7 @@ class ProduitsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $typeFiles = new TypeFile();
         $builder
             ->add('name', TextType::class)
             ->add('achat_at')
@@ -26,6 +28,18 @@ class ProduitsType extends AbstractType
             ->add('categories', EntityType::class, [
                 'class' => Categories::class,
                 'choice_label' => 'name'
+            ])
+            ->add('manuel_src', FileType::class, [
+                'label' => true,
+                'multiple' => false,
+                'mapped' => false,
+                'required' => false
+            ])
+            ->add('ticket_src', FileType::class, [
+                'label' => true,
+                'multiple' => false,
+                'mapped' => false,
+                'required' => false
             ])
             ->add('images', FileType::class, [
                 'label' => false,
