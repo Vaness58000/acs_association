@@ -42,9 +42,29 @@ class ProduitsController extends AbstractController
 
             // On récupère le manuel transmise
             $manuel = $form->get('manuel_src')->getData();
+            if(!empty($manuel->getClientOriginalName())) {
+                //On génére un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $manuel->guessExtension();
+                //On va copier le fichier dans le dossier uploads
+                $manuel->move(
+                    $this->getParameter('files_directory'),
+                    $fichier
+                );
+                $produit->setManuelSrc($fichier);
+            }
 
             // On récupère le ticket transmise
             $ticket = $form->get('ticket_src')->getData();
+            if(!empty($manuel->getClientOriginalName())) {
+                //On génére un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $ticket->guessExtension();
+                //On va copier le fichier dans le dossier uploads
+                $ticket->move(
+                    $this->getParameter('files_directory'),
+                    $fichier
+                );
+                $produit->setTicketSrc($fichier);
+            }
 
             $produit->setActive(true);
             $produit->setUsers($this->getUser());
