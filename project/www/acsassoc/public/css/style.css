@@ -1,3 +1,26 @@
 .img-mod {
     width: 25px;
 }
+
+h1 .img-mod {
+    width: 50px;
+}
+
+form div+ div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+#produits #produits_achat_at, #produits #produits_guarantee_at {
+    display: unset;
+}
+
+form div label {
+    width: 80px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.imd-delet-prd {
+    margin-left: 0px;
+}

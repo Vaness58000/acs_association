@@ -4,7 +4,7 @@
 
 {% block body %}
     <section class="container">
-        <h1 class="text-center">Catégories</h1>
+        <h1 class="text-center"><a href="{{ path('app_categories_new') }}"><img class="img-mod" src="{{ asset('img/ajouter-contenu.svg')}}" alt="créer" /></a> Catégories</h1>
 
         <table class="table">
             <thead>
@@ -22,8 +22,8 @@
                     <td>{{ category.name }}</td>
                     <td>{{ category.slug }}</td>
                     <td>
-                        <a href="{{ path('app_categories_show', {'id': category.id}) }}">show</a>
-                        <a href="{{ path('app_categories_edit', {'id': category.id}) }}">edit</a>
+                        <a href="{{ path('app_categories_show', {'id': category.id}) }}"><img class="img-mod" src="{{ asset('img/partage-des-competences-512.svg')}}" alt="visualiser" /></a>
+                        <a href="{{ path('app_categories_edit', {'id': category.id}) }}"><img class="img-mod" src="{{ asset('img/crayon.svg')}}" alt="modifier" /></a>
                     </td>
                 </tr>
             {% else %}
@@ -34,6 +34,6 @@
             </tbody>
         </table>
 
-        <a href="{{ path('app_categories_new') }}">Créer une nouvelle catégorie</a>
+        
     </sction>
 {% endblock %}

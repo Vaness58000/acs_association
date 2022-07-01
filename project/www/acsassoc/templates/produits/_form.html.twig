@@ -1,6 +1,34 @@
 {{ form_start(form) }}
+    <!--<div>
+        <label for="produits_name" class="required">Nom</label>
+        <input type="text" id="produits_name" name="produits[name]" required="required" value="{{ produit.name }}">
+    </div>
+    <div>
+        <label class="required">Achat</label>
+        <input type="date" id="produits_achat_at" name="produits[achat_at]" required="required" value="{{ produit.achatAt ? produit.achatAt|date('Y-m-d') : '' }}">
+    </div>
+    <div>
+        <label class="required">Garantie</label>
+        <input type="date" id="produits_guarantee_at" name="produits[guarantee_at]" required="required" value="{{ produit.guaranteeAt ? produit.guaranteeAt|date('Y-m-d') : '' }}">
+    </div>
+    <div>
+        <label for="produits_price" class="required">Prix</label>
+        <input type="text" id="produits_price" name="produits[price]" required="required" value="{{ produit.price }}">
+    </div>-->
     {{ form_widget(form) }}
+    <!--<div>
+        <textarea id="produits_content" name="produits[content]" style="visibility: hidden; display: none;">&lt;p&gt;jhggh&lt;/p&gt;</textarea>
+        <script type="text/javascript">
+            var CKEDITOR_BASEPATH = "/bundles/fosckeditor/";
+        </script>
+        <script type="text/javascript" src="/bundles/fosckeditor/ckeditor.js"></script>
+        <script type="text/javascript">
+            if (CKEDITOR.instances["produits_content"]) { CKEDITOR.instances["produits_content"].destroy(true); delete CKEDITOR.instances["produits_content"]; }
 
+            CKEDITOR.replace("produits_content", {"toolbar":[{"name":"styles","items":["Bold","Italic","Underline","Strike","Blockquote","-","Link","-","RemoveFormat","-","NumberedList","BulletedList","-","Outdent","Indent","-","-","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock","-","Table","-","Styles","Format","Font","FontSize","-","TextColor","BGColor","Source"]}],"language":"en"});
+        </script>
+    </div>-->
+    <label for="produits_manuel_src">test</label>
     {#verifier si la route est "produits_edit" on affiche les images#}
     {% if app.request.attributes.get('_route') == 'app_produits_edit' %}
         <h2>Images</h2>
@@ -8,7 +36,7 @@
             <div>
                 <img src="{{ asset('/uploads/img/'~image.name) }}" alt="Image" width="150">
                 <a href="{{ path('produits_delete_image', {'id': image.id}) }}"
-                data-delete data-token="{{ csrf_token('delete' ~ image.id) }}">Supprimer</a>
+                data-delete data-token="{{ csrf_token('delete' ~ image.id) }}"><img class="img-mod imd-delet-prd" src="{{ asset('img/poubelle.svg')}}" alt="supprimer" /></a>
             </div>
         {% endfor %}   
 

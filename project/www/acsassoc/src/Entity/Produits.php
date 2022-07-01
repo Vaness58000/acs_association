@@ -32,12 +32,12 @@ class Produits
     private $slug;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="achat_at", type="datetime", nullable=true)
      */
     private $achat_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="guarantee_at", type="datetime", nullable=true)
      */
     private $guarantee_at;
 

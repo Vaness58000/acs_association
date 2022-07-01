@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\EditProfileType;
 
 class UsersController extends AbstractController
 {
@@ -33,7 +34,7 @@ class UsersController extends AbstractController
             $em->flush();
 
             $this->addFlash('message', 'Profil mis à jour');
-            return $this->redirectToRoute('users');
+            return $this->redirectToRoute('app_users');
         }
         return $this->render('users/editprofile.html.twig', [
             'form' => $form->createView(),
