@@ -47,6 +47,16 @@ class CategoriesController extends AbstractController
     }
 
     /**
+     * @Route("/stats", name="app_categories_stats")
+     */
+    public function statistiques(CategoriesRepository $categoriesRepository): Response
+    {
+        return $this->render('categories/stats.html.twig', [
+            'categories' => $categoriesRepository->findAll(),
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="app_categories_show", methods={"GET"})
      */
     public function show(Categories $category): Response
