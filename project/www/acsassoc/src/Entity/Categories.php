@@ -32,9 +32,14 @@ class Categories
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity=Produits::class, mappedBy="Categories", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Produits::class, mappedBy="categories", orphanRemoval=true)
      */
     private $produits;
+
+    /**
+     * @ORM\Column(type="string", length=7)
+     */
+    private $color;
 
     public function __construct()
     {
@@ -89,6 +94,18 @@ class Categories
                 $produit->setCategories(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }
