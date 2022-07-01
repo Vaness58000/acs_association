@@ -3,13 +3,25 @@
 {% block title %}Statistique{% endblock %}
 
 {% block stylesheets %}
+    <style>
+        #categories-sommes, #categories-number {
+            width: 510px;
+        }
+        #graphs {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
     <section class="container">
-        <h1>Statistiques</h1>
-        <canvas id="categories-sommes" width="400" height="400"></canvas>
-        <canvas id="categories-number" width="400" height="400"></canvas>
+        <h1 class="text-center">Statistiques</h1>
+        <div id="graphs">
+            <canvas id="categories-sommes"></canvas>
+            <canvas id="categories-number"></canvas>
+        </div>
     </section>
 {% endblock %}
 
@@ -22,16 +34,19 @@
             data: {
                 labels: {{ catNom|raw }},
                 datasets: [{
-                    label: "Répartition des catégories",
                     data: {{ catPrice }},
                     backgroundColor: {{ catColor|raw }}
                 }]
             },
             options: {
+                responsive: false,
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Le montant total dépensée par catégories'
+                        text: 'les sommes dépensées par catégorie',
+                        font: {
+                            size: 18
+                        }
                     },
                     legend: {
                         position: 'bottom'
@@ -45,16 +60,19 @@
             data: {
                 labels: {{ catNom|raw }},
                 datasets: [{
-                    label: "Répartition des catégories",
                     data: {{ catCount }},
                     backgroundColor: {{ catColor|raw }}
                 }]
             },
             options: {
+                responsive: false,
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Le nombre de produits par catégorie'
+                        text: 'Le nombre de produits par catégorie',
+                        font: {
+                            size: 18
+                        }
                     },
                     legend: {
                         position: 'bottom'
