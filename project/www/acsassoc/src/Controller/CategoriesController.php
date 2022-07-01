@@ -51,8 +51,30 @@ class CategoriesController extends AbstractController
      */
     public function statistiques(CategoriesRepository $categoriesRepository): Response
     {
+        $categories = $categoriesRepository->findAll();
+
+        $catNom = [];
+        $catColor = [];
+        $catCount = [];
+        $catPrice = [];
+
+        foreach ($categories as $categorie) {
+            $catNom[] = $categorie->getName();
+            $catColor[] = $categorie->getColor();
+            $catCount[] = count($categorie->getProduits());
+            $priceTotal = 0;
+            foreach ($categorie->getProduits() as $produit) {
+                $priceTotal += $produit->getPrice();
+            }
+            $catPrice[] = $priceTotal;
+        }
+
         return $this->render('categories/stats.html.twig', [
             'categories' => $categoriesRepository->findAll(),
+            'catNom' => json_encode($catNom),
+            'catColor' => json_encode($catColor),
+            'catCount' => json_encode($catCount),
+            'catPrice' => json_encode($catPrice),
         ]);
     }
 
