@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\EditProfileType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+
 
 class UsersController extends AbstractController
 {
@@ -39,6 +42,30 @@ class UsersController extends AbstractController
         return $this->render('users/editprofile.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
 
+     /**
+     * @Route("/users/pass/modifier", name="users_pass_modifier")
+     */
+    public function editPass(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        if($request->isMethod('POST')){
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $this->getUser();
+
+            //On vérifie si les 2 mots depasse sont identiques
+            if($request->request->get('pass') == $request->request->get('pass2')){
+                $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('pass')));
+                $em->flush();
+                $this->addFlash('message', 'Mot de passe mis à jour avec succès');
+
+                return $this->redirectToRoute('app_users');
+            }else{
+                $this->addFlash('error', 'Les deux mots de passe ne sont pas identiques');
+            }
+        }
+        
+        return $this->render('users/editpass.html.twig');
     }
 }

@@ -4,6 +4,11 @@
 
 {% block body %}
 <div class="container">
+{% for message in app.flashes('message') %}
+    <div class="alert alert-dismissible alert-success">
+  <strong>{{message}}</strong>
+</div>
+{% endfor %}
     <div class=" row justify-content-center">
     <div class="col-md-auto">
     <div>
@@ -20,7 +25,7 @@
         <div>{{ app.user.firstname }}</div>
         <div>{{ app.user.email }}</div></br>
             <a href="{{ path('users_profil_modifier') }}" >Modifier profil</a>
-            <a href="#" >Modifier mot de passe</a></br></br></br>
+            <a href="{{ path('users_pass_modifier')}}" >Modifier mot de passe</a></br></br></br>
     </div>
     <div class="container">
         <div class="col-md-auto">
