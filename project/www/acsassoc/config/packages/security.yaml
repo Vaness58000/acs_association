@@ -32,9 +32,12 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/users, roles: ROLE_USER }
          - { path: ^/produits, roles: ROLE_USER }
+         - { path: ^/categories, roles: ROLE_USER }
+         - { path: ^/add/files, roles: ROLE_USER }
+         - { path: ^/type/file, roles: ROLE_USER }
 
 when@test:
     security:
