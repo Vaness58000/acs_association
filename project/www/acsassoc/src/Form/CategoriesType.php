@@ -6,6 +6,7 @@ use App\Entity\Categories;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategoriesType extends AbstractType
@@ -15,6 +16,9 @@ class CategoriesType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => "Nom"
+            ])
+            ->add('color', ColorType::class, [
+                'label' => "Couleur"
             ])
         ;
     }
