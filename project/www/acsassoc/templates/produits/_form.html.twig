@@ -14,6 +14,12 @@
     <div>
         <label for="produits_price" class="required">Prix</label>
         <input type="text" id="produits_price" name="produits[price]" required="required" value="{{ produit.price }}">
+    </div>
+    <div>
+        <label for="produits_categories" class="required">Catégorie</label>
+        <select id="produits_categories" name="produits[categories]">
+            <option value="1" selected="selected">lampes</option>
+        </select>
     </div>-->
     {{ form_widget(form) }}
     <!--<div>
@@ -28,7 +34,7 @@
             CKEDITOR.replace("produits_content", {"toolbar":[{"name":"styles","items":["Bold","Italic","Underline","Strike","Blockquote","-","Link","-","RemoveFormat","-","NumberedList","BulletedList","-","Outdent","Indent","-","-","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock","-","Table","-","Styles","Format","Font","FontSize","-","TextColor","BGColor","Source"]}],"language":"en"});
         </script>
     </div>-->
-    <label for="produits_manuel_src">test</label>
+    <!--<label for="produits_manuel_src">test</label>-->
     {#verifier si la route est "produits_edit" on affiche les images#}
     {% if app.request.attributes.get('_route') == 'app_produits_edit' %}
         <h2>Images</h2>
