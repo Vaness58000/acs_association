@@ -38,6 +38,7 @@ security:
          - { path: ^/categories, roles: ROLE_USER }
          - { path: ^/add/files, roles: ROLE_USER }
          - { path: ^/type/file, roles: ROLE_USER }
+         - { path: ^/main/produits, roles: ROLE_USER }
 
 when@test:
     security:
