@@ -19,10 +19,7 @@
 {% block javascripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        let catColors = {{ catColor|raw }};
-        let catName = {{ catNom|raw }};
-        let catPrice = {{ catPrice|raw }};
-        let catCount = {{ catCount|raw }};
+        let categoriesJson = {{ categoriesJson|raw }};
     </script>
     <script src="{{ asset('js/stats.js')}}"></script>
 {% endblock %}

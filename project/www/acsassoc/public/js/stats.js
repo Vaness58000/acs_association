@@ -1,60 +1,45 @@
-for (let i = 0; i < catColors.length; i++) {
-    if(catColors[i] == undefined || catColors[i] == "" || catColors[i] == "#000000" || catColors[i] == "#FFFFFFF") {
+
+for (let i = 0; i < categoriesJson.color.length; i++) {
+    if(categoriesJson.color[i] == undefined || categoriesJson.color[i] == "" || 
+    categoriesJson.color[i] == "#000000" || categoriesJson.color[i] == "#FFFFFFF") {
         let r = Math.floor(Math.random() * 255);
         let g = Math.floor(Math.random() * 255);
         let b = Math.floor(Math.random() * 255);
-        catColors[i] = 'rgba('+r+', '+g+', '+b+', 0.7)';
+        categoriesJson.color[i] = 'rgba('+r+', '+g+', '+b+', 0.7)';
     }
 }
-let categories = document.querySelector("#categories-sommes");
-let categGraph = new Chart(categories, {
-    type: "pie",
-    data: {
-        labels: catName,
-        datasets: [{
-            data: catPrice,
-            backgroundColor: catColors
-        }]
-    },
-    options: {
-        responsive: false,
-        plugins: {
-            title: {
-                display: true,
-                text: 'les sommes dépensées par catégorie',
-                font: {
-                    size: 18
+function diagramCat(title, id, count = false) {
+    let displayCat = categoriesJson.price;
+    if(count) {
+        displayCat = categoriesJson.count;
+    }
+    let categories = document.querySelector(id);
+    return new Chart(categories, {
+        type: "bar",// 'pie'
+        data: {
+            labels: categoriesJson.name,
+            datasets: [{
+                data: displayCat,
+                backgroundColor: categoriesJson.color
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: title,
+                    font: {
+                        size: 18
+                    }
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom'
                 }
-            },
-            legend: {
-                position: 'bottom'
             }
         }
-    }
-})
-let categoriesNumb = document.querySelector("#categories-number");
-let categGraphNum = new Chart(categoriesNumb, {
-    type: "pie",
-    data: {
-        labels: catName,
-        datasets: [{
-            data: catCount,
-            backgroundColor: catColors
-        }]
-    },
-    options: {
-        responsive: false,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Le nombre de produits par catégorie',
-                font: {
-                    size: 18
-                }
-            },
-            legend: {
-                position: 'bottom'
-            }
-        }
-    }
-})
+    })
+}
+diagramCat('les sommes dépensées par catégorie', "#categories-sommes");
+diagramCat('Le nombre de produits par catégorie', "#categories-number", true);

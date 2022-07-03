@@ -53,28 +53,26 @@ class CategoriesController extends AbstractController
     {
         $categories = $categoriesRepository->findAll();
 
-        $catNom = [];
-        $catColor = [];
-        $catCount = [];
-        $catPrice = [];
+        $categoriesJson = [];
+        $categoriesJson['name'] = [];
+        $categoriesJson['color'] = [];
+        $categoriesJson['count'] = [];
+        $categoriesJson['price'] = [];
 
         foreach ($categories as $categorie) {
-            $catNom[] = $categorie->getName();
-            $catColor[] = $categorie->getColor();
-            $catCount[] = count($categorie->getProduits());
+            $categoriesJson['name'][] = $categorie->getName();
+            $categoriesJson['color'][] = $categorie->getColor();
+            $categoriesJson['count'][] = count($categorie->getProduits());
             $priceTotal = 0;
             foreach ($categorie->getProduits() as $produit) {
                 $priceTotal += $produit->getPrice();
             }
-            $catPrice[] = $priceTotal;
+            $categoriesJson['price'][] = $priceTotal;
         }
 
         return $this->render('categories/stats.html.twig', [
             'categories' => $categoriesRepository->findAll(),
-            'catNom' => json_encode($catNom),
-            'catColor' => json_encode($catColor),
-            'catCount' => json_encode($catCount),
-            'catPrice' => json_encode($catPrice),
+            'categoriesJson' => json_encode($categoriesJson)
         ]);
     }
 
