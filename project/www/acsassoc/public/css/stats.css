@@ -1,0 +1,8 @@
+#categories-sommes, #categories-number {
+    width: 35%;
+}
+#graphs {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}

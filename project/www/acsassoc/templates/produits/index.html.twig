@@ -27,12 +27,12 @@
                     <td>{{ produit.id }}</td>
                     <td>{{ produit.name }}</td>
                     <td>{{ produit.slug }}</td>
-                    <td>{{ produit.achatAt ? produit.achatAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ produit.guaranteeAt ? produit.guaranteeAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ produit.achatAt ? produit.achatAt|date('Y-m-d') : '' }}</td>
+                    <td>{{ produit.guaranteeAt ? produit.guaranteeAt|date('Y-m-d') : '' }}</td>
                     <td>{{ produit.price }}</td>
-                    <td>{{ produit.content }}</td>
+                    <td>{{ produit.content|raw }}</td>
                     <td>{{ produit.active ? 'Yes' : 'No' }}</td>
-                    <td>{{ produit.createdAt ? produit.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ produit.createdAt ? produit.createdAt|date('Y-m-d') : '' }}</td>
                     <td>
                         <a href="{{ path('app_produits_show', {'id': produit.id}) }}"><img class="img-mod" src="{{ asset('img/partage-des-competences-512.svg')}}" alt="visualiser" /></a>
                         <a href="{{ path('app_produits_edit', {'id': produit.id}) }}"><img class="img-mod" src="{{ asset('img/crayon.svg')}}" alt="modifier" /></a>

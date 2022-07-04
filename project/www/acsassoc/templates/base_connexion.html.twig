@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css">
+    
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+    </head>
+    <body>
+    <main>
+       {% block body %}{% endblock %}
+    </main>
+
+        {% block javascripts %}{% endblock %}
+        <script src="{{ asset('js/script.js')}}"></script>
+         
+    </body>
+</html>
