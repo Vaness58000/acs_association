@@ -3,24 +3,25 @@
 {% block title %}Liste des produits{% endblock %}
 
 {% block body %}
+<div class="container d-flex flex-wrap "> 
 {% for produit in produits %}
-  
-<div class="card" style="width: 18rem;">
- 
 
-  <div class="card-body"><a href="{{ path('app_main_produits_show', {'id': produit.id}) }}">
-    <h5 class="card-title">{{produit.name}}</h5>
-     {% for image in produit.images %}
-     <img src="{{ asset('/uploads/img/'~image.name) }}" alt="Image" width="150">
-     {% endfor %}
+  <div class="card m-3" style="width: 18rem;">
+    <div class="card-body "><a href="{{ path('app_main_produits_show', {'id': produit.id}) }}">
+      <h5 class="card-title">{{produit.name}}</h5>
+    <img src="{{ asset('/uploads/img/'~produit.images[0].name) }}" alt="Image" width="150">
     
-       <p class="card-text">{{produit.price}}€</p>
+      <p class="card-text">{{produit.price}}€</p>
+      <p class="card-text">{{produit.categories.name}}</p>
+      <p class="card-text">{{produit.achatAt ? produit.achatAt|date('d-m-Y') : '' }}</p>
+     
 
-  
-  
-  <a></div>
+
+    </div>
 </div>
 
 
+
 {% endfor %}
+</div>
 {% endblock %}
