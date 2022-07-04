@@ -3,16 +3,7 @@
 {% block title %}Statistique{% endblock %}
 
 {% block stylesheets %}
-    <style>
-        #categories-sommes, #categories-number {
-            width: 510px;
-        }
-        #graphs {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/stats.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -28,57 +19,7 @@
 {% block javascripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        let categories = document.querySelector("#categories-sommes");
-        let categGraph = new Chart(categories, {
-            type: "pie",
-            data: {
-                labels: {{ catNom|raw }},
-                datasets: [{
-                    data: {{ catPrice }},
-                    backgroundColor: {{ catColor|raw }}
-                }]
-            },
-            options: {
-                responsive: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'les sommes dépensées par catégorie',
-                        font: {
-                            size: 18
-                        }
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        })
-        let categoriesNumb = document.querySelector("#categories-number");
-        let categGraphNum = new Chart(categoriesNumb, {
-            type: "pie",
-            data: {
-                labels: {{ catNom|raw }},
-                datasets: [{
-                    data: {{ catCount }},
-                    backgroundColor: {{ catColor|raw }}
-                }]
-            },
-            options: {
-                responsive: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Le nombre de produits par catégorie',
-                        font: {
-                            size: 18
-                        }
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        })
+        let categoriesJson = {{ categoriesJson|raw }};
     </script>
+    <script src="{{ asset('js/stats.js')}}"></script>
 {% endblock %}
