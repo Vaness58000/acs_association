@@ -24,8 +24,8 @@
         <div>{{ app.user.name }}</div>
         <div>{{ app.user.firstname }}</div>
         <div>{{ app.user.email }}</div></br>
-            <a href="{{ path('users_profil_modifier') }}" >Modifier profil</a>
-            <a href="{{ path('users_pass_modifier')}}" >Modifier mot de passe</a></br></br></br>
+            <a href="{{ path('users_profil_modifier') }}">Modifier profil</a>
+            <a href="{{ path('users_pass_modifier')}}">Modifier mot de passe</a></br></br></br>
     </div>
     <div class="container">
         <div class="col-md-auto">
@@ -37,7 +37,9 @@
             <div>Nom du produit :</div>
         </div>
             <div class="col-md-auto">
-                <div>{{ produit.name }}</div>
+                <div>{{ produit.name }}
+                </div>
+            </div>
     
     {% endfor %}
 {% endblock %}

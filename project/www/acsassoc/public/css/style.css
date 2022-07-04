@@ -24,3 +24,17 @@ form div label {
 .imd-delet-prd {
     margin-left: 0px;
 }
+.card-body a{
+    text-decoration: none;
+    color: black;
+}
+.card-body img{
+    display:block;
+    margin: auto;
+    width: 70%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.card-body h5{
+    text-align: center;
+}
