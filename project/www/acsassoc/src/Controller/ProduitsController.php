@@ -22,8 +22,12 @@ class ProduitsController extends AbstractController
      */
     public function index(ProduitsRepository $produitsRepository): Response
     {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
         return $this->render('produits/index.html.twig', [
             'produits' => $produitsRepository->findAll(),
+            'role_user' => $role,
         ]);
     }
 
@@ -32,6 +36,9 @@ class ProduitsController extends AbstractController
      */
     public function new(Request $request, ProduitsRepository $produitsRepository): Response
     {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
         $produit = new Produits();
         $form = $this->createForm(ProduitsType::class, $produit);
         $form->handleRequest($request);
@@ -89,7 +96,9 @@ class ProduitsController extends AbstractController
             $produit->setUsers($this->getUser());
             $produitsRepository->add($produit, true);
 
-            return $this->redirectToRoute('app_produits_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_produits_index', [
+                'role_user' => $role,
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('produits/new.html.twig', [
@@ -103,8 +112,12 @@ class ProduitsController extends AbstractController
      */
     public function show(Produits $produit): Response
     {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
         return $this->render('produits/show.html.twig', [
             'produit' => $produit,
+            'role_user' => $role,
         ]);
     }
 
@@ -113,6 +126,9 @@ class ProduitsController extends AbstractController
      */
     public function edit(Request $request, Produits $produit, ProduitsRepository $produitsRepository): Response
     {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
         $form = $this->createForm(ProduitsType::class, $produit);
         $form->handleRequest($request);
 
@@ -140,7 +156,9 @@ class ProduitsController extends AbstractController
             $produit->setUsers($this->getUser());
             $produitsRepository->add($produit, true);
 
-            return $this->redirectToRoute('app_produits_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_produits_index', [
+                'role_user' => $role,
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('produits/edit.html.twig', [
@@ -154,11 +172,16 @@ class ProduitsController extends AbstractController
      */
     public function delete(Request $request, Produits $produit, ProduitsRepository $produitsRepository): Response
     {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             $produitsRepository->remove($produit, true);
         }
 
-        return $this->redirectToRoute('app_produits_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_produits_index', [
+            'role_user' => $role,
+        ], Response::HTTP_SEE_OTHER);
     }
 
     /**
