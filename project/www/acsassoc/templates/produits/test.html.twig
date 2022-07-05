@@ -3,5 +3,7 @@
 {% block title %}Un nouveau produit{% endblock %}
 
 {% block body %}
-    {{ dump(endproduit) }}
+    {% for produit in endproduit %}
+        {{ produit.name }}<br />
+    {% endfor %}
 {% endblock %}
