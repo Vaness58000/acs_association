@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProduitsRepository;
+use App\Repository\CategoriesRepository;
 use App\Entity\Produits;
 use App\Entity\Categories;
 
@@ -27,17 +28,39 @@ class MainProduitsController extends AbstractController
             'role_user' => $role,
         ]);
     }
-
     /**
-     * @Route("/categorie/{id}", name="categorie", methods={"GET"})
+     * @Route("/categorie", name="categorie")
      */
-    public function categorie(Categories $categorie): Response
+    public function categorieMain(CategoriesRepository $categoriesRepository): Response
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
 
-        return $this->render('main_produits/index.html.twig', [
+        $categories = $categoriesRepository->findAll();
+        $categorie = $categoriesRepository->findAll()[0];
+
+        return $this->render('main_produits/categorie.html.twig', [
             'produits' => $categorie->getProduits(),
+            'categories' => $categories,
+            'categorie_id' => $categorie->getId(),
+            'role_user' => $role,
+        ]);
+    }
+
+    /**
+     * @Route("/categorie/{id}", name="categorie_id", methods={"GET"})
+     */
+    public function categorie(Categories $categorie, CategoriesRepository $categoriesRepository): Response
+    {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
+        $categories = $categoriesRepository->findAll();
+
+        return $this->render('main_produits/categorie.html.twig', [
+            'produits' => $categorie->getProduits(),
+            'categories' => $categories,
+            'categorie_id' => $categorie->getId(),
             'role_user' => $role,
         ]);
     }

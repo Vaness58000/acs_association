@@ -7,29 +7,49 @@
 
     <h1 class="text-center"><a href="{{ path('app_admin_register') }}"><img class="img-mod" src="{{ asset('img/ajouter-contenu.svg')}}" alt="créer" /></a> Un utilisateur</h1>
 
-    <table class="table">
-        <thead>
+    <table class="table table-striped">
+        <thead class="table-primary">
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Roles</th>
                 <th>Email</th>
                 <th>Email vérifier</th>
-                <th>actions</th>
+                <th>Roles</th>
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             {% if id_user != user.id %}
                 <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.firstname }}</td>
-                    <td>{{ user.roles[0] }}</td>
-                    <td>{{ user.email }}</td>
-                    <td><input type="checkbox" data-id="{{ user.id }}" {{ (user.isVerified) ? "checked" : "" }}></td>
-                    <td></td>
+                    <td class="align-middle">{{ user.id }}</td>
+                    <td class="align-middle">{{ user.name }}</td>
+                    <td class="align-middle">{{ user.firstname }}</td>
+                    <td class="align-middle">{{ user.email }}</td>
+                    <td class="align-middle">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" data-id="{{ user.id }}" {{ (user.isVerified) ? "checked" : "" }}>
+                        </div>
+                    </td>
+                    <td class="align-middle">
+                        <select class="select-role form-select" name="users[role]" data-id="{{ user.id }}">
+                            {% if user.roles[0] == "ROLE_ADMIN" %}
+                                <option value="ROLE_ADMIN" selected>Admin</option>
+                            {% else %}
+                                <option value="ROLE_ADMIN">Admin</option>
+                            {% endif %}
+                            {% if user.roles[0] == "ROLE_USER" %}
+                                <option value="ROLE_USER" selected>Utilisateur</option>
+                            {% else %}
+                                <option value="ROLE_USER">Utilisateur</option>
+                            {% endif %}
+                            {% if user.roles[0] == "ROLE_DELETE" %}
+                                <option value="ROLE_DELETE" selected>Supprimer</option>
+                            {% else %}
+                                <option value="ROLE_DELETE">Supprimer</option>
+                            {% endif %}
+                        </select>
+                    </td>
                 </tr>
             {% endif %}
         {% else %}
@@ -45,25 +65,5 @@
 {% endblock %}
 
 {% block javascripts %}
-<script>
-                window.onload = () => {
-                    //let modal = new Modal('#modal-delete');
-                    //let modal = new Axentix.Modal('#modal-delete');
-                    let verified = document.querySelectorAll("[type=checkbox]")
-                    for (let bouton of verified) {
-                        bouton.addEventListener("click", function () {
-                            let xmlhttp = new XMLHttpRequest;
-                            xmlhttp.open("get", `/admin/users/verified/${this.dataset.id}`)
-                            xmlhttp.send()
-                        })
-                    }
-                    /*let supprimer = document.querySelectorAll(".modal-trigger");
-                    for(let bouton of supprimer){
-                        bouton.addEventListener("click", function () {
-                            document.querySelector(".modal-footer a").href = `/users/annonces/supprimer/${this.dataset.id}`
-                            document.querySelector(".modal-content").innerText = `Êtes-vous sûr(e) de vouloir supprimer l'annonce "${this.dataset.titre}"`
-                        })
-                    }*/
-                }
-            </script>
+    <script src="{{ asset('js/admin_users.js')}}"></script>
 {% endblock %}

@@ -39,6 +39,18 @@ class ProduitsRepository extends ServiceEntityRepository
         }
     }
 
+    public function end_garantee() {
+
+        return $this->createQueryBuilder('Produits')
+//            ->andWhere('p.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('p.id', 'ASC')
+//            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Produits[] Returns an array of Produits objects
 //     */
