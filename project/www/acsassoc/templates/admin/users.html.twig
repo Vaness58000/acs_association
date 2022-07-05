@@ -1,0 +1,69 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+<section class="container">
+
+    <h1 class="text-center"><a href="{{ path('app_admin_register') }}"><img class="img-mod" src="{{ asset('img/ajouter-contenu.svg')}}" alt="créer" /></a> Un utilisateur</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Roles</th>
+                <th>Email</th>
+                <th>Email vérifier</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            {% if id_user != user.id %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.roles[0] }}</td>
+                    <td>{{ user.email }}</td>
+                    <td><input type="checkbox" data-id="{{ user.id }}" {{ (user.isVerified) ? "checked" : "" }}></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+</sction>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+                window.onload = () => {
+                    //let modal = new Modal('#modal-delete');
+                    //let modal = new Axentix.Modal('#modal-delete');
+                    let verified = document.querySelectorAll("[type=checkbox]")
+                    for (let bouton of verified) {
+                        bouton.addEventListener("click", function () {
+                            let xmlhttp = new XMLHttpRequest;
+                            xmlhttp.open("get", `/admin/users/verified/${this.dataset.id}`)
+                            xmlhttp.send()
+                        })
+                    }
+                    /*let supprimer = document.querySelectorAll(".modal-trigger");
+                    for(let bouton of supprimer){
+                        bouton.addEventListener("click", function () {
+                            document.querySelector(".modal-footer a").href = `/users/annonces/supprimer/${this.dataset.id}`
+                            document.querySelector(".modal-content").innerText = `Êtes-vous sûr(e) de vouloir supprimer l'annonce "${this.dataset.titre}"`
+                        })
+                    }*/
+                }
+            </script>
+{% endblock %}

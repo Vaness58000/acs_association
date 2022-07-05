@@ -18,15 +18,22 @@ class UsersController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('users/index.html.twig');
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
+        return $this->render('users/index.html.twig', [
+            'role_user' => $role,
+        ]);
     }
 
- /**
+    /**
      * @Route("/users/profil/modifier", name="users_profil_modifier")
      */
     public function editProfile(Request $request)
     {
         $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
         $form = $this->createForm(EditProfileType::class, $user);
 
         $form->handleRequest($request);
@@ -41,6 +48,7 @@ class UsersController extends AbstractController
         }
         return $this->render('users/editprofile.html.twig', [
             'form' => $form->createView(),
+            'role_user' => $role,
         ]);
     }
 
@@ -53,6 +61,8 @@ class UsersController extends AbstractController
             $em = $this->getDoctrine()->getManager();
 
             $user = $this->getUser();
+            $role = $user->getRoles()[0];
+    
 
             //On vérifie si les 2 mots depasse sont identiques
             if($request->request->get('pass') == $request->request->get('pass2')){

@@ -33,6 +33,11 @@
         <li class="nav-item">
           <a class="nav-link" href="{{  path('app_users') }}">Utilisateurs</a>
         </li>
+        {% if role_user == "ROLE_ADMIN" %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{  path('app_admin_index') }}">Admin</a>
+          </li>
+        {% endif %}
         <li class="nav-item">
           <a class="nav-link" href="{{  path('app_categories_stats') }}">Stats</a>
         </li>

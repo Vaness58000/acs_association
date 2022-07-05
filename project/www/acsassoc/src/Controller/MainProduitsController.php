@@ -19,8 +19,12 @@ class MainProduitsController extends AbstractController
      */
     public function index(ProduitsRepository $produitsRepository): Response
     {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
         return $this->render('main_produits/index.html.twig', [
             'produits' => $produitsRepository->findAll(),
+            'role_user' => $role,
         ]);
     }
 
@@ -29,8 +33,12 @@ class MainProduitsController extends AbstractController
      */
     public function categorie(Categories $categorie): Response
     {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
         return $this->render('main_produits/index.html.twig', [
             'produits' => $categorie->getProduits(),
+            'role_user' => $role,
         ]);
     }
 
@@ -39,8 +47,12 @@ class MainProduitsController extends AbstractController
      */
     public function show(Produits $produit): Response
     {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
         return $this->render('main_produits/show.html.twig', [
             'produit' => $produit,
+            'role_user' => $role,
         ]);
     }
 }
