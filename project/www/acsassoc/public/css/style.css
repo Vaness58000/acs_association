@@ -38,3 +38,27 @@ form div label {
 .card-body h5{
     text-align: center;
 }
+.img-pdf, .img-ticket{
+    width: 55px;
+}
+.lien_pdf a{
+    text-decoration: none;
+    color:black;
+}
+.produit{
+    padding-left: 30%;
+}
+.produit_img{
+    
+    transition: transform .1s;
+}
+.produit_img:hover{
+    -ms-transform: scale(1.3);
+    -webkit-transform: scale(1.3); 
+    transform: scale(1.3);
+}
+.images{
+    display: flex;
+    flex-direction: column;
+}
+

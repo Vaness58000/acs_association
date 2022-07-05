@@ -94,6 +94,11 @@ class Produits
      */
     private $ticket_src;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lieu_achat;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -291,6 +296,18 @@ class Produits
     public function setTicketSrc(string $ticket_src): self
     {
         $this->ticket_src = $ticket_src;
+
+        return $this;
+    }
+
+    public function getLieuAchat(): ?string
+    {
+        return $this->lieu_achat;
+    }
+
+    public function setLieuAchat(string $lieu_achat): self
+    {
+        $this->lieu_achat = $lieu_achat;
 
         return $this;
     }
