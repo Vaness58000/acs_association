@@ -11,7 +11,8 @@
 </div>
 <div class="container d-flex flex-wrap "> 
 {% for produit in produits %}
-
+{% if produit.active %}
+ 
   <div class="card m-3 justify-content-center " style="width: 18rem;">
     <div>
       <div class="card-body"><a href="{{ path('app_main_produits_show', {'id': produit.id}) }}">
@@ -22,6 +23,7 @@
       </div>
     </div>
   </div>
+{% endif %}
 {% endfor %}
 </div>
 {% endblock %}
