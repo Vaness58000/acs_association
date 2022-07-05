@@ -4,13 +4,13 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
 
-        <link rel="stylesheet" href="https://bootswatch.com/5/materia/bootstrap.min.css">
+        <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css">
     
         {% block stylesheets %}{% endblock %}
         <link rel="stylesheet" href="{{ asset('css/style.css')}}">
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ path('app_home') }}">ACS ASSOCIATION</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,17 +45,23 @@
           <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
         </li>
       </ul>
-     
+      <form class="d-flex">
+        <input class="form-control me-sm-2" type="text" placeholder="Recherche">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">RECHERCHER</button>
+      </form>
     </div>
   </div>
   
 </nav>
 <ul class="nav flex-column">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Mon profil</a>
+    <a class="nav-link active" aria-current="page" href="{{ path('app_admin_users') }}">Users</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Mes produits</a>
+    <a class="nav-link" href="#">Produits</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Catégories</a>
   </li>
  
 </ul>
