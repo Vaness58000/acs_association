@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Users;
 
 /**
  * @Route("/admin", name="app_admin_")
@@ -48,7 +49,21 @@ class AdminController extends AbstractController
      */
     public function verified(Users $users): Response
     {
-        $users->setVerified(!$users->isVerified());
+        $users->setIsVerified(!$users->isVerified());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($users);
+        $em->flush();
+
+        return new Response("true");
+    }
+
+    /**
+     * @Route("/users/role/{id}/{role}", name="users_verified")
+     */
+    public function role(Users $users, ?string $role): Response
+    {
+        $users->setRoles([$role]);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($users);
