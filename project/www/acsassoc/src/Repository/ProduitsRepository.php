@@ -51,13 +51,34 @@ class ProduitsRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $mots
+     * @return Produits[] Returns an array of Produits objects
+     */
+    public function search($mots = null, $categorie = null): array {
+        $query = $this->createQueryBuilder('p');
+        $query->where('p.active = 1');
+        if($mots != null) {
+            $query->andWhere('MATCH_AGAINST(p.name, p.content) AGAINST (:mots boolean) > 0')
+                ->setParameter('mots', $mots);
+        }
+        if($categorie != null) {
+            $query->leftJoin('p.categories', 'c');
+            $query->andWhere('c.id = :id')
+                ->setParameter('id', $categorie);
+        }
+        return $query->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Produits[] Returns an array of Produits objects
 //     */
 //    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
+//            ->andWhere('p.name = :val')
 //            ->setParameter('val', $value)
 //            ->orderBy('p.id', 'ASC')
 //            ->setMaxResults(10)
