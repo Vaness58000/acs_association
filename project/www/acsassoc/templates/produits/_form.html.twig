@@ -1,40 +1,73 @@
 {{ form_start(form) }}
-    <!--<div>
-        <label for="produits_name" class="required">Nom</label>
-        <input type="text" id="produits_name" name="produits[name]" required="required" value="{{ produit.name }}">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Nom</label>
+        <div class="col-sm-10">
+        {{form_widget(form.name)}}
+        </div>
     </div>
-    <div>
-        <label class="required">Achat</label>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Date d'achat</label>
+        <div class="col-sm-10">
+        {{form_widget(form.achat_at)}}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Date de fin de garantie</label>
+        <div class="col-sm-10">
+        {{form_widget(form.guarantee_at)}}
+        </div>
+    </div>
+     <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Lieu d'achat</label>
+        <div class="col-sm-10">
+        {{form_widget(form.lieu_achat)}}
+        </div>
+    </div>
+   <!--<div class="form-group row">
+        <label class="col-sm-2 col-form-label">Achat</label>
         <input type="date" id="produits_achat_at" name="produits[achat_at]" required="required" value="{{ produit.achatAt ? produit.achatAt|date('Y-m-d') : '' }}">
     </div>
-    <div>
-        <label class="required">Garantie</label>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Garantie</label>
         <input type="date" id="produits_guarantee_at" name="produits[guarantee_at]" required="required" value="{{ produit.guaranteeAt ? produit.guaranteeAt|date('Y-m-d') : '' }}">
-    </div>
-    <div>
-        <label for="produits_price" class="required">Prix</label>
-        <input type="text" id="produits_price" name="produits[price]" required="required" value="{{ produit.price }}">
-    </div>
-    <div>
-        <label for="produits_categories" class="required">Catégorie</label>
-        <select id="produits_categories" name="produits[categories]">
-            <option value="1" selected="selected">lampes</option>
-        </select>
     </div>-->
-    {{ form_widget(form) }}
-    <!--<div>
-        <textarea id="produits_content" name="produits[content]" style="visibility: hidden; display: none;">&lt;p&gt;jhggh&lt;/p&gt;</textarea>
-        <script type="text/javascript">
-            var CKEDITOR_BASEPATH = "/bundles/fosckeditor/";
-        </script>
-        <script type="text/javascript" src="/bundles/fosckeditor/ckeditor.js"></script>
-        <script type="text/javascript">
-            if (CKEDITOR.instances["produits_content"]) { CKEDITOR.instances["produits_content"].destroy(true); delete CKEDITOR.instances["produits_content"]; }
-
-            CKEDITOR.replace("produits_content", {"toolbar":[{"name":"styles","items":["Bold","Italic","Underline","Strike","Blockquote","-","Link","-","RemoveFormat","-","NumberedList","BulletedList","-","Outdent","Indent","-","-","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock","-","Table","-","Styles","Format","Font","FontSize","-","TextColor","BGColor","Source"]}],"language":"en"});
-        </script>
-    </div>-->
-    <!--<label for="produits_manuel_src">test</label>-->
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Prix</label>
+        <div class="col-sm-10">
+        {{form_widget(form.price)}}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Catégorie</label>
+        <div class="col-sm-10">
+        {{form_widget(form.categories)}}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+        {{form_widget(form.content)}}
+        </div>
+    </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Manuel</label>
+        <div class="col-sm-10">
+        {{form_widget(form.manuel_src)}}
+        </div>
+    </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Ticket</label>
+        <div class="col-sm-10">
+        {{form_widget(form.ticket_src)}}
+        </div>
+    </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Images</label>
+        <div class="col-sm-10">
+        {{form_widget(form.images)}}
+        </div>
+    </div>
+  <!--<label for="produits_manuel_src">test</label>-->
     {#verifier si la route est "produits_edit" on affiche les images#}
     {% if app.request.attributes.get('_route') == 'app_produits_edit' %}
         <h2>Images</h2>
@@ -47,5 +80,5 @@
         {% endfor %}   
 
     {% endif %}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
