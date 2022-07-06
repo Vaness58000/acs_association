@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use App\Entity\Categories;
 
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
+ * @ORM\Table(name="categories", indexes={@ORM\Index(columns={"name"}, flags={"fulltext"})})
  */
 class Categories
 {
@@ -108,5 +110,9 @@ class Categories
         $this->color = $color;
 
         return $this;
+    }
+
+    public function __toString() {
+        return $this->name;
     }
 }

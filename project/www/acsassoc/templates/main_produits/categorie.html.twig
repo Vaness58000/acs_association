@@ -3,11 +3,11 @@
 {% block title %}Liste des produits{% endblock %}
 
 {% block body %}
-<div class="container"> 
-  <form class="d-flex">
-    <input class="form-control me-sm-2" type="text" placeholder="Recherche">
-    <button type="button" class="btn btn-primary btn-lg">Rechercher</button>
-  </form>
+<div class="container">
+    {{ form_start(form) }}
+        {{ form_widget(form.mots) }}
+        {{ form_widget(form.Rechercher) }}
+    {{ form_end(form) }}
   <select class="form-select text-center" id="categorie" name="categorie">
   {{ dump(categories) }}
     {% for categorie in categories %}
