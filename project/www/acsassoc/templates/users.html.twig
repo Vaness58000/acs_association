@@ -28,19 +28,16 @@
           <a class="nav-link" href="{{path('app_categories_index')}}">Catégories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{  path('app_produits_index') }}">Produits</a>
+          <a class="nav-link" href="{{  path('app_categories_stats') }}">Stats</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Utilisateurs</a>
+          <a class="nav-link" href="{{  path('app_users') }}">Utilisateurs</a>
         </li>
         {% if role_user == "ROLE_ADMIN" %}
           <li class="nav-item">
             <a class="nav-link" href="{{  path('app_admin_index') }}">Admin</a>
           </li>
         {% endif %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{  path('app_categories_stats') }}">Stats</a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
         </li>
@@ -52,10 +49,13 @@
 </nav>
 <ul class="nav flex-column">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Mon profil</a>
+    <a class="nav-link active" aria-current="page" href="{{ path('app_users') }}">Mon profil</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Mes produits</a>
+    <a class="nav-link" href="{{ path('app_produits_index') }}">Mes produits</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ path('app_categories_index') }}">Catégories</a>
   </li>
  
 </ul>

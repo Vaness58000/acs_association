@@ -1,0 +1,9 @@
+{% extends 'users.html.twig' %}
+
+{% block title %}Un nouveau produit{% endblock %}
+
+{% block body %}
+    {% for produit in endproduit %}
+        {{ produit.name }}<br />
+    {% endfor %}
+{% endblock %}

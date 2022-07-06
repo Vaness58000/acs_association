@@ -26,7 +26,7 @@ class ProduitsController extends AbstractController
         $role = $user->getRoles()[0];
 
         return $this->render('produits/index.html.twig', [
-            'produits' => $produitsRepository->findAll(),
+            'produits' => $user->getProduits(),
             'role_user' => $role,
         ]);
     }
@@ -104,7 +104,25 @@ class ProduitsController extends AbstractController
         return $this->renderForm('produits/new.html.twig', [
             'produit' => $produit,
             'form' => $form,
+            'role_user' => $role,
         ]);
+    }
+
+    /**
+     * @Route("/testEndProduit", name="testEndProduit")
+     */
+    public function testEndGarantee(ProduitsRepository $produitsRepository){
+
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
+        $endproduit = $produitsRepository->end_garantee();
+
+        return $this->render('produits/test.html.twig', [
+            'endproduit' => $endproduit,
+            'role_user' => $role,
+        ]);
+        
     }
 
     /**
@@ -164,6 +182,7 @@ class ProduitsController extends AbstractController
         return $this->renderForm('produits/edit.html.twig', [
             'produit' => $produit,
             'form' => $form,
+            'role_user' => $role,
         ]);
     }
 
