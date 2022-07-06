@@ -38,7 +38,11 @@ class CategoriesController extends AbstractController
         $role = $user->getRoles()[0];
 
         $category = new Categories();
-        $form = $this->createForm(CategoriesType::class, $category);
+        $form = $this->createForm(CategoriesType::class, $category, [
+            'attr' => [
+                'class' => ''
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -22,24 +22,46 @@ class ProduitsType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => "Nom"
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control-plaintext'
+    
+                ]
             ])
             ->add('achat_at', DateType::class, [
-                'label' => "Achat"
+                'label' => false,
+                'attr' => [
+                    'class' => ''
+                ],
+                'widget' => 'single_text'
+
             ])
             ->add('guarantee_at', DateType::class, [
-                'label' => "Garantie"
+                'label' => false,
+                'widget' => 'single_text'
             ])
             ->add('price', NumberType::class, [
-                'label' => "Prix"
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control-plaintext'
+                ]
+            ])
+            ->add('lieu_achat', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control-plaintext'
+                ]
             ])
             ->add('content', CKEditorType::class, [
                 'label' => "Contenu"
             ])
             ->add('categories', EntityType::class, [
-                'label' => "Catégorie",
+                'label' => false,
                 'class' => Categories::class,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'form-select'
+                ]
             ])
             ->add('manuel_src', FileType::class, [
                 'label' => "Manuel",
