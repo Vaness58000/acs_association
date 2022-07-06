@@ -38,15 +38,31 @@ form div label {
 .card-body h5{
     text-align: center;
 }
+
+/*page produit individuel*/
+.produit_ind{
+    margin-top: 100px;
+
+}
 .img-pdf, .img-ticket{
-    width: 55px;
+    width: 45px;
+    display:block;
+    margin: auto;
+    margin-top: 10px;
+    
+}
+.lien span{
+    margin-top: 50px;
+    font-size: small;
+    margin-right: 40px;
 }
 .lien_pdf a{
     text-decoration: none;
     color:black;
 }
 .produit{
-    padding-left: 30%;
+    padding-left: 400px;
+    text-align: justify;
 }
 .produit_img{
     
@@ -60,5 +76,19 @@ form div label {
 .images{
     display: flex;
     flex-direction: column;
+}
+.colonne_gauche{
+    width: 300px;
+    height: 150px;
+    margin-top: 20px;
+    margin: 4px, 4px;
+    padding: 4px;
+    background-color: #ffffff;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+#burger_menu{
+    filter: invert(1);
 }
 

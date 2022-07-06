@@ -15,10 +15,17 @@ class CategoriesType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => "Nom"
+
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control-plaintext',
+                ]
             ])
             ->add('color', ColorType::class, [
-                'label' => "Couleur"
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control form-control-color',
+                ]
             ])
         ;
     }
