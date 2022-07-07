@@ -53,7 +53,11 @@
         <label class="col-sm-2 col-form-label">Manuel</label>
         <div class="col-sm-10">
         <img src="{{asset('img/logo_pdf.png')}}" alt="fichier PDF" width="55px;">
-        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer">
+        <!--<a href="{{ path('produits_delete_manuel', {'id': produit.id}) }}" id="manuel"
+                data-delete data-id="{{produit.id}}" data-token="{{ csrf_token('delete_manuel' ~ produit.id) }}">-->
+        <a href="#" id="manuel"
+                data-delete data-id="{{produit.id}}" data-token="{{ csrf_token('delete_manuel' ~ produit.id) }}">
+        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer"></a>
         </div>
         <div class="input_none">{{form_widget(form.manuel_src)}}
         </div>
@@ -72,7 +76,9 @@
         <label class="col-sm-2 col-form-label">Ticket</label>
         <div class="col-sm-10">
         <img src="{{asset('img/logo_ticket.png')}}" alt="ticket de caisse" width="55px;">
-        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer">
+        <a href="{{ path('produits_delete_ticket', {'id': produit.id}) }}" id="ticket" 
+                data-delete data-id="{{produit.id}}" data-token="{{ csrf_token('delete_ticket' ~ produit.id) }}" >
+        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer"></a>
         </div>
         <div class="input_none">{{form_widget(form.ticket_src)}}
         </div>
@@ -93,7 +99,7 @@
         {% for image in produit.images %}
             <div>
                 <img src="{{ asset('/uploads/img/'~image.name) }}" alt="Image" width="150">
-                <a href="{{ path('produits_delete_image', {'id': image.id}) }}"
+                <a href="{{ path('produits_delete_image', {'id': image.id}) }}" class="images"
                 data-delete data-token="{{ csrf_token('delete' ~ image.id) }}"><img class="img-mod imd-delet-prd" src="{{ asset('img/poubelle.svg')}}" alt="supprimer" /></a>
             </div>
         {% endfor %}   
@@ -106,3 +112,71 @@
     {% endif %}
 {{ form_end(form) }}
 
+{% block javascripts %}
+   
+    <script>
+      
+    // Gestion des boutons "Supprimer"
+           
+            document.querySelectorAll("#manuel").forEach(element => {//selectionne la class [ou l'id]
+                element.addEventListener("click", function(e){
+                  
+                    // On empêche la navigation
+                    e.preventDefault();
+        
+                   
+                    // On demande confirmation
+                    if(confirm("Voulez-vous supprimer ce manuel ?")){
+                        // On envoie une requête Ajax vers le href du lien avec la méthode DELETE
+                        fetch(this.getAttribute("href"), {
+                            method: "DELETE_MANUEL",
+                            headers: {
+                                "X-Requested-With": "XMLHttpRequest",
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({"_token": this.dataset.token})
+                        }).then(
+                            // On récupère la réponse en JSON
+                            response => response.json()
+                        ).then(data => {
+                            if(data.success)
+                                this.parentElement.remove()
+                            else
+                                alert(data.error)
+                        }).catch(e => alert(e));
+                    }
+                })
+            })
+            document.querySelectorAll("#ticket").forEach(element => {//selectionne la class [ou l'id]
+                element.addEventListener("click", function(e){
+                    // On empêche la navigation
+                    e.preventDefault();
+
+                    // On demande confirmation
+                    if(confirm("Voulez-vous supprimer ce ticket ?")){
+                        // On envoie une requête Ajax vers le href du lien avec la méthode DELETE
+                        fetch(this.getAttribute("href"), {
+                            method: "DELETE_TICKET",
+                            headers: {
+                                "X-Requested-With": "XMLHttpRequest",
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({"_token": this.dataset.token})
+                        }).then(
+                            // On récupère la réponse en JSON
+                            response => response.json()
+                        ).then(data => {
+                            if(data.success)
+                                this.parentElement.remove()
+                            else
+                                alert(data.error)
+                        }).catch(e => alert(e));
+                    }
+                })
+            })
+           
+
+    
+    </script>
+    <!--<script src="{{ asset('js/stats.js')}}"></script>-->
+{% endblock %}
