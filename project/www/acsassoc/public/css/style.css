@@ -110,7 +110,9 @@ form div label {
 #sous-menu2 p:hover{
     color:black;
 }
-
+main{
+    margin-top: 50px;
+}
 
 .form-control-color{
     width: 100%;
@@ -118,4 +120,10 @@ form div label {
 
 input:focus, textarea:focus {
   outline: none;
+}
+.input_none{
+    display: none;
+}
+#select_cat{
+    margin-top: 10px;
 }
