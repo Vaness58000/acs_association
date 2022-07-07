@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use App\Entity\Produits;
 
 /**
  * @ORM\Entity(repositoryClass=ProduitsRepository::class)
+ * @ORM\Table(name="produits", indexes={@ORM\Index(columns={"name", "content"}, flags={"fulltext"})})
  */
 class Produits
 {
@@ -103,6 +105,8 @@ class Produits
     {
         $this->images = new ArrayCollection();
         $this->addFiles = new ArrayCollection();
+        $this->achat_at = new \DateTime();
+        $this->guarantee_at = new \DateTime();
     }
 
     public function getId(): ?int

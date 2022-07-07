@@ -23,14 +23,6 @@
         {{form_widget(form.lieu_achat)}}
         </div>
     </div>
-   <!--<div class="form-group row">
-        <label class="col-sm-2 col-form-label">Achat</label>
-        <input type="date" id="produits_achat_at" name="produits[achat_at]" required="required" value="{{ produit.achatAt ? produit.achatAt|date('Y-m-d') : '' }}">
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Garantie</label>
-        <input type="date" id="produits_guarantee_at" name="produits[guarantee_at]" required="required" value="{{ produit.guaranteeAt ? produit.guaranteeAt|date('Y-m-d') : '' }}">
-    </div>-->
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">Prix</label>
         <div class="col-sm-10">
@@ -80,5 +72,9 @@
         {% endfor %}   
 
     {% endif %}
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    {% if button_label|default('Enregistrer') == 'Update' %}
+        <button class="btn"><img class="img-mod imd-delet-prd" src="{{ asset('img/available_updates.svg')}}" alt="update" /></button>
+    {% else %}
+        <button class="btn"><img class="img-mod imd-delet-prd" src="{{ asset('img/floppy.svg')}}" alt="enregistrer" /></button>
+    {% endif %}
 {{ form_end(form) }}

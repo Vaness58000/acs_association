@@ -112,3 +112,10 @@ form div label {
 }
 
 
+.form-control-color{
+    width: 100%;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+}
