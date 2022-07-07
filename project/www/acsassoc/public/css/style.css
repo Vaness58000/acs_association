@@ -98,18 +98,7 @@ form div label {
 #menu a:hover{
     color:black;
 }
-#sous-menu p{
-    color:white;
-}
-#sous-menu2 p{
-    color: white;
-}
-#sous-menu p:hover{
-    color:black;
-}
-#sous-menu2 p:hover{
-    color:black;
-}
+
 main{
     margin-top: 50px;
 }

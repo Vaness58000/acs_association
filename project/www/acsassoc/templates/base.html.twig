@@ -14,35 +14,39 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="{{ path('app_home') }}">ACS ASSOCIATION</a>
         
-    <div class="d-flex">
-      <ul class="navbar-nav me-sm-2">
-        <li class="nav-item dropdown">
-          <a class="nav-link " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img id="burger_menu" src="{{ asset ('img/burger_icon.svg') }}" alt="menu"></a>
-          <div id="menu" class="dropdown-menu dropdown-menu-lg-end navbar-dark bg-primary ">
-            <a class="dropdown-item" href="{{ path('app_home') }}">Accueil</a>
-            <a class="dropdown-item" href="{{ path('app_main_produits_categorie')}}">Catégories</a>
-            <a class="dropdown-item" href="{{ path('app_categories_stats') }}">Stats</a>
-          <div class="dropdown-divider"></div>
-            <div id="sous-menu" class="dropdown-item"><p>Utilisateurs</p></div>
-              <a class="dropdown-item" aria-current="page" href="{{ path('app_users') }}">Mon profil</a>
-              <a class="dropdown-item" href="{{ path('app_produits_index') }}">Mes produits</a>
-              <a class="dropdown-item" href="{{ path('app_categories_index') }}">Catégories</a>
-          <div class="dropdown-divider"></div>
-            {% if role_user == "ROLE_ADMIN" %}
-            <div id="sous-menu2" class="dropdown-item"><p>Admin</p></div>
-                <a class="dropdown-item" aria-current="page" href="{{ path('app_admin_users') }}">Users</a>
-                <a class="dropdown-item" href="{{ path('app_admin_produits_index') }}">Produits</a>
-                <a class="dropdown-item" href="{{ path('app_categories_index') }}">Catégories</a>
+      <div class="d-flex">
+        <ul class="navbar-nav me-sm-2">
+          <li class="nav-item dropdown">
+            <a class="nav-link " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              <img id="burger_menu" src="{{ asset ('img/burger_icon.svg') }}" alt="menu"></a>
+            <div id="menu" class="dropdown-menu dropdown-menu-lg-end navbar-dark bg-primary ">
+              <a class="dropdown-item" href="{{ path('app_home') }}">Accueil</a>
+              <a class="dropdown-item" href="{{ path('app_main_produits_categorie')}}">Catégories</a>
+              <a class="dropdown-item" href="{{ path('app_categories_stats') }}">Stats</a>
             <div class="dropdown-divider"></div>
+              <div class="dropdown"><p class="text-white">Utilisateurs</p></div>
+              <div id="sous-menu">
+                <a class="dropdown-item" aria-current="page" href="{{ path('app_users') }}">Mon profil</a>
+                <a class="dropdown-item" href="{{ path('app_produits_index') }}">Mes produits</a>
+                <a class="dropdown-item" href="{{ path('app_categories_index') }}">Catégories</a>
+              </div>
+            <div class="dropdown-divider"></div>
+              {% if role_user == "ROLE_ADMIN" %}
+              <div class="dropdown"><p class="text-white">Admin</p></div>
+                <div id="sous-menu2" >
+                  <a class="dropdown-item" aria-current="page" href="{{ path('app_admin_users') }}">Users</a>
+                  <a class="dropdown-item" href="{{ path('app_admin_produits_index') }}">Produits</a>
+                  <a class="dropdown-item" href="{{ path('app_categories_index') }}">Catégories</a>
+                </div>
+              <div class="dropdown-divider"></div>
 
-            {% endif %}
-              <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
-          </div>
-        </li>
-      </ul>
-  </div>
-</div>
+              {% endif %}
+                <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+              </div>
+            </li>
+          </ul>
+      </div>
+    </div>
 </nav>
     <main>
       <br/>

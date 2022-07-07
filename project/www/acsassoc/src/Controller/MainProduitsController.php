@@ -32,7 +32,7 @@ class MainProduitsController extends AbstractController
                 'class' => 'd-flex'
             ]
         ]);
-
+        
         $search = $form->handleRequest($request);
 
         
@@ -47,6 +47,7 @@ class MainProduitsController extends AbstractController
             'produits' => $produit,
             'role_user' => $role,
             'form' => $form->createView(),
+        
         ]);
     }
     /**
