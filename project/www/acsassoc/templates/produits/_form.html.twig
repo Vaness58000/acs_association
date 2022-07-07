@@ -41,18 +41,45 @@
         {{form_widget(form.content)}}
         </div>
     </div>
-      <div class="form-group row">
+    {% if produit.manuelSrc =="" %}
+        <div class="form-group row">
         <label class="col-sm-2 col-form-label">Manuel</label>
         <div class="col-sm-10">
         {{form_widget(form.manuel_src)}}
         </div>
     </div>
-      <div class="form-group row">
+    {% else %}
+        <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Manuel</label>
+        <div class="col-sm-10">
+        <img src="{{asset('img/logo_pdf.png')}}" alt="fichier PDF" width="55px;">
+        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer">
+        </div>
+        <div class="input_none">{{form_widget(form.manuel_src)}}
+        </div>
+    </div>
+    {% endif %}
+      
+    {% if produit.ticketSrc == "" %}
+        <div class="form-group row">
         <label class="col-sm-2 col-form-label">Ticket</label>
         <div class="col-sm-10">
         {{form_widget(form.ticket_src)}}
         </div>
     </div>
+    {% else %}
+        <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Ticket</label>
+        <div class="col-sm-10">
+        <img src="{{asset('img/logo_ticket.png')}}" alt="ticket de caisse" width="55px;">
+        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer">
+        </div>
+        <div class="input_none">{{form_widget(form.ticket_src)}}
+        </div>
+    </div>
+    {% endif %}
+    
+      
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Images</label>
         <div class="col-sm-10">
@@ -78,3 +105,4 @@
         <button class="btn"><img class="img-mod imd-delet-prd" src="{{ asset('img/floppy.svg')}}" alt="enregistrer" /></button>
     {% endif %}
 {{ form_end(form) }}
+
