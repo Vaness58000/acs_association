@@ -79,9 +79,10 @@ class ProduitsRepository extends ServiceEntityRepository
      */
     public function countByDate(){
          $query = $this->createQueryBuilder('p');
-         $query->innerJoin('p.categories', 'c')
+         $query
              ->select('SUBSTRING(p.achat_at, 1, 10) as dateProduits, COUNT(p) as count, c.name as categorie_name, c.color as color')
-             ->groupBy('dateProduits')
+             ->innerJoin('p.categories', 'c')
+             ->groupBy('dateProduits')//, categorie_name
              ->orderBy('c.name', 'ASC')
          ;
         return $query->getQuery()->getResult();
@@ -93,9 +94,11 @@ class ProduitsRepository extends ServiceEntityRepository
      */
     public function countPriceByDate(){
         $query = $this->createQueryBuilder('p');
-        $query->innerJoin('p.categories', 'c')
+        $query
             ->select('SUBSTRING(p.achat_at, 1, 10) as dateProduits, SUM(p.price) as count, c.name as categorie_name, c.color as color')
-            ->groupBy('dateProduits')
+            ->innerJoin('p.categories', 'c')
+            ->groupBy('dateProduits')//, categorie_name
+            ->orderBy('c.name', 'ASC')
         ;
        return $query->getQuery()->getResult();
    }
@@ -103,7 +106,7 @@ class ProduitsRepository extends ServiceEntityRepository
     /**
      * Returns Annonces between 2 dates
      */
-    public function selectInterval($from, $to, $cat = null){
+    /*public function selectInterval($from, $to, $cat = null){
         // $query = $this->getEntityManager()->createQuery("
         //     SELECT a FROM App\Entity\Annonces a WHERE a.created_at > :from AND a.created_at < :to
         // ")
@@ -122,7 +125,7 @@ class ProduitsRepository extends ServiceEntityRepository
                 ->setParameter(':cat', $cat);
         }
         return $query->getQuery()->getResult();
-    }
+    }*/
 
 //    /**
 //     * @return Produits[] Returns an array of Produits objects
