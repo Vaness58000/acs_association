@@ -1,5 +1,5 @@
-#categories-sommes, #categories-number {
-    width: 35%;
+#categories-sommes, #categories-number, #produitsCount, #produitsCount2 {
+    width: 40%;
 }
 #graphs {
     display: flex;

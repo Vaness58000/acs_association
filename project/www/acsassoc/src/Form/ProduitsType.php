@@ -31,13 +31,16 @@ class ProduitsType extends AbstractType
             ->add('achat_at', DateType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => ''
+                    'class' => 'form-control-plaintext'
                 ],
                 'widget' => 'single_text'
 
             ])
             ->add('guarantee_at', DateType::class, [
                 'label' => false,
+                'attr' => [
+                    'class' => 'form-control-plaintext'
+                ],
                 'widget' => 'single_text'
             ])
             ->add('price', NumberType::class, [

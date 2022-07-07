@@ -105,6 +105,8 @@ class Produits
     {
         $this->images = new ArrayCollection();
         $this->addFiles = new ArrayCollection();
+        $this->achat_at = new \DateTime();
+        $this->guarantee_at = new \DateTime();
     }
 
     public function getId(): ?int
