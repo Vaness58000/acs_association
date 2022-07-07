@@ -14,5 +14,10 @@
     {{form_row(form.color)}}
 </div>
 </div>
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    
+{% if button_label|default('Enregistrer') == 'Update' %}
+<button class="btn"><img class="img-mod imd-delet-prd" src="{{ asset('img/available_updates.svg')}}" alt="update" /></button>
+{% else %}
+<button class="btn"><img class="img-mod imd-delet-prd" src="{{ asset('img/floppy.svg')}}" alt="enregistrer" /></button>
+{% endif %}
 {{ form_end(form) }}

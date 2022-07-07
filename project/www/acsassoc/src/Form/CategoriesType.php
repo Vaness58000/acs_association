@@ -24,7 +24,7 @@ class CategoriesType extends AbstractType
             ->add('color', ColorType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'form-control form-control-color',
+                    'class' => 'form-control-plaintext form-control-color',
                 ]
             ])
         ;

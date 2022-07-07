@@ -118,6 +118,8 @@ class ProduitsController extends AbstractController
 
         $endproduit = $produitsRepository->end_garantee();
 
+        dd($endproduit);
+
         return $this->render('produits/test.html.twig', [
             'endproduit' => $endproduit,
             'role_user' => $role,

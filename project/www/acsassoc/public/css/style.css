@@ -92,3 +92,10 @@ form div label {
     filter: invert(1);
 }
 
+.form-control-color{
+    width: 100%;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+}
