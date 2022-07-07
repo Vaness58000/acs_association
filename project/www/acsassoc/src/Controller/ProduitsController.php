@@ -49,7 +49,7 @@ class ProduitsController extends AbstractController
 
             // On récupère le manuel transmise
             $manuel = $form->get('manuel_src')->getData();
-            if(!empty($manuel->getClientOriginalName())) {
+            if(!empty($manuel) && !empty($manuel->getClientOriginalName())) {
                 //On génére un nouveau nom de fichier
                 $fichier = md5(uniqid()) . '.' . $manuel->guessExtension();
                 //On va copier le fichier dans le dossier uploads
@@ -60,9 +60,10 @@ class ProduitsController extends AbstractController
                 $produit->setManuelSrc($fichier);
             }
 
+
             // On récupère le ticket transmise
             $ticket = $form->get('ticket_src')->getData();
-            if(!empty($manuel->getClientOriginalName())) {
+            if(!empty($ticket) && !empty($ticket->getClientOriginalName())) {
                 //On génére un nouveau nom de fichier
                 $fichier = md5(uniqid()) . '.' . $ticket->guessExtension();
                 //On va copier le fichier dans le dossier uploads
@@ -172,7 +173,33 @@ class ProduitsController extends AbstractController
                           $img->setSrc($fichier);
                           $produit->addImage($img);
                       }
-          
+           // On récupère le manuel transmise
+           $manuel = $form->get('manuel_src')->getData();
+           if(!empty($manuel) && !empty($manuel->getClientOriginalName())) {
+               //On génére un nouveau nom de fichier
+               $fichier = md5(uniqid()) . '.' . $manuel->guessExtension();
+               //On va copier le fichier dans le dossier uploads
+               $manuel->move(
+                   $this->getParameter('files_directory'),
+                   $fichier
+               );
+               $produit->setManuelSrc($fichier);
+           }
+
+
+           // On récupère le ticket transmise
+           $ticket = $form->get('ticket_src')->getData();
+           if(!empty($ticket) && !empty($ticket->getClientOriginalName())) {
+               //On génére un nouveau nom de fichier
+               $fichier = md5(uniqid()) . '.' . $ticket->guessExtension();
+               //On va copier le fichier dans le dossier uploads
+               $ticket->move(
+                   $this->getParameter('files_directory'),
+                   $fichier
+               );
+               $produit->setTicketSrc($fichier);
+           }
+
             $produit->setUsers($this->getUser());
             $produitsRepository->add($produit, true);
 
@@ -228,5 +255,26 @@ class ProduitsController extends AbstractController
         }else{
             return new JsonResponse(['error' => 'Token Invalide'], 400);
         }
+    }
+
+     /**
+     * @Route("/supprime/manuel/{id}", name="produits_delete_manuel", methods={"GET","DELETE_MANUEL"})
+     */
+    public function deleteManuel(Produits $produit, ProduitsRepository $produitsRepository, Request $request){
+        unlink($this->getParameter('files_directory').'/'.$produit->getManuelSrc()); //unlink=pour supprimer un fichier 
+        $produit->setManuelSrc(""); //retire le nom de la src dans la bdd
+        $produitsRepository->add($produit, true); // ça fait la midification dans la bdd
+       
+        return new JsonResponse(['success' => 1]);
+    }
+    /**
+     * @Route("/supprime/ticket/{id}", name="produits_delete_ticket", methods={"GET","DELETE_TICKET"})
+     */
+    public function deleteTicket(Produits $produit, ProduitsRepository $produitsRepository, Request $request){
+        unlink($this->getParameter('files_directory').'/'.$produit->getTicketSrc()); //unlink=pour supprimer un fichier 
+        $produit->setTicketSrc(""); //retire le nom de la src dans la bdd
+        $produitsRepository->add($produit, true); // ça fait la midification dans la bdd
+        
+        return new JsonResponse(['success' => 1]);
     }
 }

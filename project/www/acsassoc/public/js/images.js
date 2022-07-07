@@ -1,6 +1,6 @@
 window.onload = () => {
     // Gestion des boutons "Supprimer"
-    let links = document.querySelectorAll("[data-delete]");
+    let links = document.querySelectorAll(".images");
     
     // On boucle sur links
     for(link of links){
