@@ -86,5 +86,5 @@ function diagramDateCat(title, id, produitDataJson) {
      
 }
 
-diagramDateCat("le nombre des produits", "#produitsCount", produitsJson);
-diagramDateCat("le prix des produits", "#produitsCount2", produitsJson2);
+diagramDateCat("Le nombre de produits par catégorie", "#produitsCount", produitsJson);
+diagramDateCat("les sommes dépensées par catégorie", "#produitsCount2", produitsJson2);
