@@ -17,9 +17,7 @@
     <div>
       <div class="card-body"><a href="{{ path('app_main_produits_show', {'id': produit.id}) }}">
         <h5 class="card-title">{{produit.name}}</h5>
-      {% if produit.images is empty %}
-      {% else %}
-   
+      {% if produit.images is not empty %}
        <img src="{{ asset('/uploads/img/'~produit.images[0].name) }}" alt="Image" width="150">
       {% endif %}
         <p class="card-text">{{produit.categories.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span>{{produit.price}}€</span></p>

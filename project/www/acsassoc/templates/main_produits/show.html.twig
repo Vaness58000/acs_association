@@ -9,6 +9,7 @@
 
     <div class="produit_ind">
         <div class="float-start">
+            {% if produit.images is not empty %}
             <div class="row justify-content-center">
                 <div class="col-xs-6 col-sm-8 col-lg-10">
                     <img id="big_image" src="{{ asset('/uploads/img/'~ produit.images[0].name) }}" alt="Image">
@@ -22,16 +23,21 @@
                     {% endfor %}
                 </div>
             </div>
+            {% endif %}
             <div class="lien d-flex rounded float-start">
             
-            <div class="d-flex">
-                <span>Ticket de caisse <br/>
-                <a href="{{ asset ('/uploads/files/'~ produit.ticketSrc) }}" target="_blank"><img class="img-ticket" src="{{ asset('img/logo_ticket.png')}}"></a></span>
-            </div>
-            <div class="d-flex">
-            <span>Manuel d'utilisation<br/>
-                <a href="{{ asset ('/uploads/files/'~ produit.manuelSrc) }}" target="_blank"><img class="img-pdf" src="{{ asset('img/logo_pdf.png')}}"> </a></span>
-            </div>
+                {% if produit.ticketSrc != "" %}
+                <div class="d-flex">
+                    <span>Ticket de caisse <br/>
+                    <a href="{{ asset ('/uploads/files/'~ produit.ticketSrc) }}" target="_blank"><img class="img-ticket" src="{{ asset('img/logo_ticket.png')}}"></a></span>
+                </div>
+                {% endif %}
+                {% if produit.ticketSrc != "" %}
+                <div class="d-flex">
+                <span>Manuel d'utilisation<br/>
+                    <a href="{{ asset ('/uploads/files/'~ produit.manuelSrc) }}" target="_blank"><img class="img-pdf" src="{{ asset('img/logo_pdf.png')}}"> </a></span>
+                </div>
+                {% endif %}
             </div> 
         </div>
         <div class="produit col-sm-13 col-xs-6 col-md-10">

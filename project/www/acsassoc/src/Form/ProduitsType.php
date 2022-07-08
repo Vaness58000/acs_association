@@ -6,6 +6,7 @@ use App\Entity\Produits;
 use App\Entity\Categories;
 use App\Entity\TypeFile;
 use App\Entity\AddFiles;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -82,7 +83,22 @@ class ProduitsType extends AbstractType
                 'label' => false,
                 'multiple' => true,
                 'mapped' => false,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'accept' => 'image/gif, image/png, image/jpeg, image/bmp, image/webp',
+                ],
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/gif', 
+                            'image/png', 
+                            'image/jpeg', 
+                            'image/bmp', 
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Merci de télécharger une image valide.',
+                    ])
+                ],
             ])
         ;
     }

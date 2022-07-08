@@ -46,8 +46,7 @@ class MainProduitsController extends AbstractController
         return $this->render('main_produits/index.html.twig', [
             'produits' => $produit,
             'role_user' => $role,
-            'form' => $form->createView(),
-        
+            'form' => $form->createView()
         ]);
     }
     /**

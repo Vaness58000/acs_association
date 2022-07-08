@@ -8,8 +8,7 @@
         {{ form_widget(form.mots) }}
         {{ form_widget(form.Rechercher) }}
     {{ form_end(form) }}
-  <select id="select_cat" class="form-select text-center" id="categorie" name="categorie">
-  {{ dump(categories) }}
+  <select id="select_cat" class="form-select text-center"  name="categorie"><!--id="categorie"-->
     {% for categorie in categories %}
       <option value="{{ categorie.id }}" {{ (categorie.id == categorie_id) ? "selected" : "" }}>{{ categorie.name }}</option>
     {% endfor %}
@@ -22,8 +21,10 @@
     <div>
       <div class="card-body"><a href="{{ path('app_main_produits_show', {'id': produit.id}) }}">
         <h5 class="card-title">{{produit.name}}</h5>
+        {% if produit.images is not empty %}
         <img src="{{ asset('/uploads/img/'~produit.images[0].name) }}" alt="Image" width="150">
         <p class="card-text">{{produit.categories.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span>{{produit.price}}€</span></p>
+        {% endif %}
         <p class="card-text">{{produit.achatAt ? produit.achatAt|date('d/m/Y') : '' }}</p>
       </div>
     </div>

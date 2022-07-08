@@ -39,6 +39,23 @@ class CategoriesRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Returns Annonces between 2 dates
+     */
+    public function selectInterval($from = null, $to = null){
+        $query = $this->createQueryBuilder('c')
+            ->innerJoin('c.produits', 'p');
+        if(!empty($from)) {
+            $query->andWhere('p.achat_at > :from')
+                ->setParameter(':from', $from);
+        }
+        if(!empty($to)) {
+            $query->andWhere('p.achat_at < :to')
+                ->setParameter(':to', $to);
+        }
+        return $query->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Categories[] Returns an array of Categories objects
 //     */
