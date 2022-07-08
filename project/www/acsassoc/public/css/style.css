@@ -116,3 +116,13 @@ input:focus, textarea:focus {
 #select_cat{
     margin-top: 10px;
 }
+
+#manuel_src_id, #ticket_src_id {
+    display: none;
+}
+
+.img-produit-figure {
+    border: rgb(180, 180, 180) 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+}

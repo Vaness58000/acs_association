@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\ClassMain\ConfigSite;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\UsersAuthenticator;
@@ -50,10 +51,12 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $config = new ConfigSite();
+
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('acs@association.fr', 'AcsAssociation'))
+                    ->from(new Address($config->getEmail(), $config->getName()))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
