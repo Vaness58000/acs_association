@@ -15,13 +15,22 @@ class EditProfileType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => "Nom"
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control-plaintext',
+                ]
             ])
             ->add('firstname', TextType::class, [
-                'label' => "Prénom"
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control-plaintext',
+                ]
             ])
-            ->add('Valider', SubmitType::class)
-        ;
+            ->add('Valider', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ]   
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
