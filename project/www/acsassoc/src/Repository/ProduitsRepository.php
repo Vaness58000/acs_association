@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Produits;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\ClassMain\ConfigSite;
 
 /**
  * @extends ServiceEntityRepository<Produits>
@@ -52,16 +53,15 @@ class ProduitsRepository extends ServiceEntityRepository
 
     public function before_end_garantee() {
 
+        $config = new ConfigSite();
         $query = $this->createQueryBuilder('p');
         $query->innerJoin('p.users', 'u');
         $query->where('p.guarantee_at = :now');
-        $query->setParameter('now', date("Y-m-d", strtotime(date("Y-m-d"). ' + 2 days')));
+        $query->setParameter('now', date("Y-m-d", strtotime(date("Y-m-d"). ' + '.$config->getNb_jour().' days')));
         return $query->getQuery()
             ->getResult()
         ;
     }
-
-
 
     /**
      * Undocumented function

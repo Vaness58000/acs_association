@@ -48,21 +48,30 @@ class ProduitGaranteeEndCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('arg1');
         $produits = $this->produitsRepository->end_garantee();
+        $produits_before = $this->produitsRepository->before_end_garantee();
         $users = $this->usersRepository->findAll();
 
-        $test = new TextEmailProduit($produits);
+        $end_garantee = new TextEmailProduit($produits);
+        $before_end_garantee = new TextEmailProduit($produits_before);
 
         $config = new ConfigSite();
 
         $html = '';
         $text = '';
 
-        if(!empty($test->text()) && !empty($test->html())) {
-            $html .= $test->html();
-            $text .= $test->text();
+        if(!empty($end_garantee->Tablehtml()) && !empty($end_garantee->tableText())) {
+            $html .= $end_garantee->Tablehtml();
+            $text .= $end_garantee->tableText();
         }
 
-        if(!empty($test->text()) && !empty($html)) {
+        if(!empty($before_end_garantee->Tablehtml(true)) && !empty($before_end_garantee->tableText(true))) {
+            $html .= $before_end_garantee->Tablehtml(true);
+            $text .= $before_end_garantee->tableText(true);
+        }
+
+        if(!empty($text) && !empty($html)) {
+            $html = $end_garantee->startHtml().$html.$end_garantee->endHtml();
+            $text = $end_garantee->startText().$text.$end_garantee->endText();
             foreach ($users as $user) {
                 $email = (new Email())
                         ->from(new Address($config->getEmail(), $config->getName()))
