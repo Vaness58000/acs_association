@@ -16,19 +16,26 @@
         {% endif %}
 
         <h1 class="h3 mb-3 font-weight-normal text-center">Connexion</h1>
+    <div class="form-group row">
         <div class="mb-3 row">
             <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control-plaintext" autocomplete="email" required autofocus>
             </div>
         </div>
+       
         <div class="mb-3 row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">Mot de pass</label>
+                <label for="inputPassword" class="col-sm-2 col-form-label">Mot de passe</label>
             <div class="col-sm-10">
-                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                <div class="d-flex align-items-center">
+                    <input type="password" name="password" id="inputPassword" class="registration_form_plainPassword form-control-plaintext " autocomplete="current-password" required>
+                    <i id="togglePassword" class="bi bi-eye-slash"></i>
+                </div>
             </div>
         </div>
-
+                 
+                </div>
+          
         <input type="hidden" name="_csrf_token"
             value="{{ csrf_token('authenticate') }}">
 
@@ -44,10 +51,13 @@
         #}
         <div class="row justify-content-md-center">
             <button class="btn btn-primary col col-lg-2" type="submit">
-                Sign in
+                Se connecter
             </button>
         </div>
     </form>
     <p class="text-center p-3"><a href="{{path('app_forgot_password_request') }}">Mot de passe oublié</a></p>
 </section>
+{% endblock %}
+{% block javascripts %}
+        <script src="{{ asset('js/eye_password.js') }}"></script>
 {% endblock %}
