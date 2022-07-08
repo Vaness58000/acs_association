@@ -34,7 +34,11 @@ class UsersController extends AbstractController
         $user = $this->getUser();
         $role = $user->getRoles()[0];
 
-        $form = $this->createForm(EditProfileType::class, $user);
+        $form = $this->createForm(EditProfileType::class, $user, [
+            'attr' => [
+                'class' => 'd-flex'
+            ]
+        ]);
 
         $form->handleRequest($request);
 
