@@ -1,3 +1,4 @@
+let color_cat = {};
 function colorDiag(color) {
     if(color == undefined || color == "" || 
     color == "#000000" || color == "#FFFFFFF") {
@@ -8,8 +9,12 @@ function colorDiag(color) {
     }
     return color;
 }
+function colorDiagLine(name) {
+    return color_cat[name];
+}
 for (let i = 0; i < categoriesJson.color.length; i++) {
     categoriesJson.color[i] = colorDiag(categoriesJson.color[i]);
+    color_cat[categoriesJson.name[i]] = categoriesJson.color[i];
 }
 function diagramCat(title, id, count = false) {
     let displayCat = categoriesJson.price;
@@ -47,12 +52,10 @@ function diagramCat(title, id, count = false) {
 diagramCat('les sommes dépensées par catégorie', "#categories-sommes");
 diagramCat('Le nombre de produits par catégorie', "#categories-number", true);
 
-
-
 function diagramDateCat(title, id, produitDataJson) {
     for (let i = 0; i < produitDataJson.datas.length; i++) {
         for (let j = 0; j < produitDataJson.datas[i].length; j++) {
-            produitDataJson.datas[i][j].borderColor = colorDiag(produitDataJson.datas[i][j].borderColor);
+            produitDataJson.datas[i][j].borderColor = colorDiagLine(produitDataJson.datas[i][j].label);
         } 
     }
     let produitsCount = document.querySelector(id);
