@@ -31,7 +31,11 @@
                     <td>{{ produit.guaranteeAt ? produit.guaranteeAt|date('Y-m-d') : '' }}</td>
                     <td>{{ produit.price }}</td>
                     <td>{{ produit.content|raw }}</td>
-                    <td>{{ produit.active ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input display_row custom-control-display colum_display" type="checkbox" data-id="{{ produit.id }}" {{ (produit.active) ? "checked" : "" }}>
+                        </div>
+                    </td>
                     <td>{{ produit.createdAt ? produit.createdAt|date('Y-m-d') : '' }}</td>
                     <td>
                         <a href="{{ path('app_produits_show', {'id': produit.id}) }}"><img class="img-mod" src="{{ asset('img/partage-des-competences-512.svg')}}" alt="visualiser" /></a>
@@ -48,4 +52,8 @@
 
         
     </sction>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/active_produit.js') }}"></script>
 {% endblock %}

@@ -278,4 +278,18 @@ class ProduitsController extends AbstractController
         
         return new JsonResponse(['success' => 1]);
     }
+
+    /**
+     * @Route("/activer/{id}", name="activer")
+     */
+    public function activer(Produits $produit): Response
+    {
+        $produit->setActive(!$produit->isActive());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($produit);
+        $em->flush();
+
+        return new Response("true");
+    }
 }
