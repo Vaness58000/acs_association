@@ -87,18 +87,6 @@ class ProduitsType extends AbstractType
                 'attr' => [
                     'accept' => 'image/gif, image/png, image/jpeg, image/bmp, image/webp',
                 ],
-                'constraints' => [
-                    new File([
-                        'mimeTypes' => [
-                            'image/gif', 
-                            'image/png', 
-                            'image/jpeg', 
-                            'image/bmp', 
-                            'image/webp',
-                        ],
-                        'mimeTypesMessage' => 'Merci de télécharger une image valide.',
-                    ])
-                ],
             ])
         ;
     }
