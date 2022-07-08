@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\SearchDateIntervalType;
+
 
 /**
  * @Route("/categories")
@@ -115,12 +117,28 @@ class CategoriesController extends AbstractController
     /**
      * @Route("/stats", name="app_categories_stats")
      */
-    public function statistiques(CategoriesRepository $categoriesRepository, ProduitsRepository $produitsRepository): Response
+    public function statistiques(CategoriesRepository $categoriesRepository, ProduitsRepository $produitsRepository, Request $request): Response
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
 
-        $categories = $categoriesRepository->findAll();
+        $form = $this->createForm(SearchDateIntervalType::class, null, [
+            'attr' => [
+                'class' => 'd-flex'
+            ]
+        ]);
+
+        $search = $form->handleRequest($request);
+
+        $categories = $categoriesRepository->selectInterval();
+        $produits = $produitsRepository->countByDate();
+        $produits2 = $produitsRepository->countPriceByDate();
+
+        if($form->isSubmitted() && $form->isValid()){
+            $categories = $categoriesRepository->selectInterval($search->get('start')->getData(), $search->get('end')->getData());
+            $produits = $produitsRepository->countByDate($search->get('start')->getData(), $search->get('end')->getData());
+            $produits2 = $produitsRepository->countPriceByDate($search->get('start')->getData(), $search->get('end')->getData());
+        }
 
         $categoriesJson = [];
         $categoriesJson['name'] = [];
@@ -140,10 +158,7 @@ class CategoriesController extends AbstractController
         }
 
         // On va chercher le nombre d'annonces publiées par date
-        $produits = $produitsRepository->countByDate();
         $categories_produit_data = $this->createTabGraph($produits);
-
-        $produits2 = $produitsRepository->countPriceByDate();
         $categories_produit_data2 = $this->createTabGraph($produits2);
         
 
@@ -153,6 +168,7 @@ class CategoriesController extends AbstractController
             'produitsJson' => json_encode($categories_produit_data),
             'produitsJson2' => json_encode($categories_produit_data2),
             'role_user' => $role,
+            'form' => $form->createView(),
         ]);
     }
 

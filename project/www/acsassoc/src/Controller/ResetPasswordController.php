@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\ClassMain\ConfigSite;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -164,8 +165,10 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
+        $config = new ConfigSite();
+
         $email = (new TemplatedEmail())
-            ->from(new Address('no-reply@acsassociation.fr', 'AcsAssociation.fr'))
+            ->from(new Address($config->getEmail(), $config->getName()))
             ->to($user->getEmail())
             ->subject('Your password reset request')
             ->htmlTemplate('reset_password/email.html.twig')

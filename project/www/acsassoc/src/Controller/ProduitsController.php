@@ -233,7 +233,7 @@ class ProduitsController extends AbstractController
     }
 
     /**
-     * @Route("/supprime/image/{id}", name="produits_delete_image", methods={"DELETE"})
+     * @Route("/supprime/image/{id}", name="produits_delete_image", methods={"GET", "DELETE"})
      */
     public function deleteImage(Images $image, Request $request){
         $data = json_decode($request->getContent(), true);
@@ -258,7 +258,7 @@ class ProduitsController extends AbstractController
     }
 
      /**
-     * @Route("/supprime/manuel/{id}", name="produits_delete_manuel", methods={"GET","DELETE_MANUEL"})
+     * @Route("/supprime/manuel/{id}", name="produits_delete_manuel", methods={"GET", "DELETE"})
      */
     public function deleteManuel(Produits $produit, ProduitsRepository $produitsRepository, Request $request){
         unlink($this->getParameter('files_directory').'/'.$produit->getManuelSrc()); //unlink=pour supprimer un fichier 
@@ -267,8 +267,9 @@ class ProduitsController extends AbstractController
        
         return new JsonResponse(['success' => 1]);
     }
+    
     /**
-     * @Route("/supprime/ticket/{id}", name="produits_delete_ticket", methods={"GET","DELETE_TICKET"})
+     * @Route("/supprime/ticket/{id}", name="produits_delete_ticket", methods={"GET", "DELETE"})
      */
     public function deleteTicket(Produits $produit, ProduitsRepository $produitsRepository, Request $request){
         unlink($this->getParameter('files_directory').'/'.$produit->getTicketSrc()); //unlink=pour supprimer un fichier 

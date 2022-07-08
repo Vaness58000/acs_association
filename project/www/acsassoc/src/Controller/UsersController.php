@@ -57,11 +57,13 @@ class UsersController extends AbstractController
      */
     public function editPass(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
         if($request->isMethod('POST')){
             $em = $this->getDoctrine()->getManager();
 
-            $user = $this->getUser();
-            $role = $user->getRoles()[0];
+            
     
 
             //On vérifie si les 2 mots depasse sont identiques
@@ -76,6 +78,8 @@ class UsersController extends AbstractController
             }
         }
         
-        return $this->render('users/editpass.html.twig');
+        return $this->render('users/editpass.html.twig', [
+            'role_user' => $role,
+        ]);
     }
 }

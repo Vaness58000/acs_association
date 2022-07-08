@@ -49,38 +49,46 @@
         </div>
     </div>
     {% else %}
-        <div class="form-group row">
+    <div id="manuel_src_id" class="form-group row">
+        <label class="col-sm-2 col-form-label">Manuel</label>
+        <div class="col-sm-10">
+        {{form_widget(form.manuel_src)}}
+        </div>
+    </div>
+        <div id="manuel_src_img_id" class="form-group row">
         <label class="col-sm-2 col-form-label">Manuel</label>
         <div class="col-sm-10">
         <img src="{{asset('img/logo_pdf.png')}}" alt="fichier PDF" width="55px;">
-        <!--<a href="{{ path('produits_delete_manuel', {'id': produit.id}) }}" id="manuel"
-                data-delete data-id="{{produit.id}}" data-token="{{ csrf_token('delete_manuel' ~ produit.id) }}">-->
-        <a href="#" id="manuel"
-                data-delete data-id="{{produit.id}}" data-token="{{ csrf_token('delete_manuel' ~ produit.id) }}">
-        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer"></a>
+        <a href="{{ path('produits_delete_manuel', {'id': produit.id}) }}" id="manuel"
+                data-delete data-token="{{ csrf_token('delete' ~ produit.id) }}">
+        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer"></a>{{ produit.manuelSrc }}
         </div>
-        <div class="input_none">{{form_widget(form.manuel_src)}}
         </div>
     </div>
     {% endif %}
       
     {% if produit.ticketSrc == "" %}
-        <div class="form-group row">
+    <div class="form-group row">
         <label class="col-sm-2 col-form-label">Ticket</label>
         <div class="col-sm-10">
         {{form_widget(form.ticket_src)}}
         </div>
     </div>
     {% else %}
-        <div class="form-group row">
+    <div id="ticket_src_id" class="form-group row">
+        <label class="col-sm-2 col-form-label">Ticket</label>
+        <div class="col-sm-10">
+        {{form_widget(form.ticket_src)}}
+        </div>
+    </div>
+    <div id="ticket_src_img_id" class="form-group row">
         <label class="col-sm-2 col-form-label">Ticket</label>
         <div class="col-sm-10">
         <img src="{{asset('img/logo_ticket.png')}}" alt="ticket de caisse" width="55px;">
         <a href="{{ path('produits_delete_ticket', {'id': produit.id}) }}" id="ticket" 
-                data-delete data-id="{{produit.id}}" data-token="{{ csrf_token('delete_ticket' ~ produit.id) }}" >
-        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer"></a>
+                data-delete data-token="{{ csrf_token('delete' ~ produit.id) }}" >
+        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer"></a>{{ produit.ticketSrc }}
         </div>
-        <div class="input_none">{{form_widget(form.ticket_src)}}
         </div>
     </div>
     {% endif %}
@@ -96,87 +104,21 @@
     {#verifier si la route est "produits_edit" on affiche les images#}
     {% if app.request.attributes.get('_route') == 'app_produits_edit' %}
         <h2>Images</h2>
+        <div>
         {% for image in produit.images %}
-            <div>
-                <img src="{{ asset('/uploads/img/'~image.name) }}" alt="Image" width="150">
+            <figure class="figure img-produit-figure">
                 <a href="{{ path('produits_delete_image', {'id': image.id}) }}" class="images"
                 data-delete data-token="{{ csrf_token('delete' ~ image.id) }}"><img class="img-mod imd-delet-prd" src="{{ asset('img/poubelle.svg')}}" alt="supprimer" /></a>
-            </div>
+                <img src="{{ asset('/uploads/img/'~image.name) }}" alt="Image" width="150">
+                <figcaption class="figure-caption"></figcaption>
+            </figure>
         {% endfor %}   
+        </div>
 
     {% endif %}
     {% if button_label|default('Enregistrer') == 'Update' %}
-        <button class="btn"><img class="img-mod imd-delet-prd" src="{{ asset('img/available_updates.svg')}}" alt="update" /></button>
+        <button class="btn bg-light bg-gradient"><img class="img-mod imd-delet-prd" src="{{ asset('img/available_updates.svg')}}" alt="update" /></button>
     {% else %}
-        <button class="btn"><img class="img-mod imd-delet-prd" src="{{ asset('img/floppy.svg')}}" alt="enregistrer" /></button>
+        <button class="btn bg-light bg-gradient"><img class="img-mod imd-delet-prd" src="{{ asset('img/floppy.svg')}}" alt="enregistrer" /></button>
     {% endif %}
 {{ form_end(form) }}
-
-{% block javascripts %}
-   
-    <script>
-      
-    // Gestion des boutons "Supprimer"
-           
-            document.querySelectorAll("#manuel").forEach(element => {//selectionne la class [ou l'id]
-                element.addEventListener("click", function(e){
-                  
-                    // On empêche la navigation
-                    e.preventDefault();
-        
-                   
-                    // On demande confirmation
-                    if(confirm("Voulez-vous supprimer ce manuel ?")){
-                        // On envoie une requête Ajax vers le href du lien avec la méthode DELETE
-                        fetch(this.getAttribute("href"), {
-                            method: "DELETE_MANUEL",
-                            headers: {
-                                "X-Requested-With": "XMLHttpRequest",
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({"_token": this.dataset.token})
-                        }).then(
-                            // On récupère la réponse en JSON
-                            response => response.json()
-                        ).then(data => {
-                            if(data.success)
-                                this.parentElement.remove()
-                            else
-                                alert(data.error)
-                        }).catch(e => alert(e));
-                    }
-                })
-            })
-            document.querySelectorAll("#ticket").forEach(element => {//selectionne la class [ou l'id]
-                element.addEventListener("click", function(e){
-                    // On empêche la navigation
-                    e.preventDefault();
-
-                    // On demande confirmation
-                    if(confirm("Voulez-vous supprimer ce ticket ?")){
-                        // On envoie une requête Ajax vers le href du lien avec la méthode DELETE
-                        fetch(this.getAttribute("href"), {
-                            method: "DELETE_TICKET",
-                            headers: {
-                                "X-Requested-With": "XMLHttpRequest",
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({"_token": this.dataset.token})
-                        }).then(
-                            // On récupère la réponse en JSON
-                            response => response.json()
-                        ).then(data => {
-                            if(data.success)
-                                this.parentElement.remove()
-                            else
-                                alert(data.error)
-                        }).catch(e => alert(e));
-                    }
-                })
-            })
-           
-
-    
-    </script>
-    <!--<script src="{{ asset('js/stats.js')}}"></script>-->
-{% endblock %}

@@ -2,8 +2,8 @@
     {{ form_widget(form) }}
     
     {% if button_label|default('Enregistrer') == 'Update' %}
-        <button class="btn"><img class="img-mod imd-delet-prd" src="{{ asset('img/available_updates.svg')}}" alt="update" /></button>
+        <button class="btn bg-info bg-gradient"><img class="img-mod imd-delet-prd" src="{{ asset('img/available_updates.svg')}}" alt="update" /></button>
     {% else %}
-        <button class="btn"><img class="img-mod imd-delet-prd" src="{{ asset('img/floppy.svg')}}" alt="enregistrer" /></button>
+        <button class="btn bg-info bg-gradient"><img class="img-mod imd-delet-prd" src="{{ asset('img/floppy.svg')}}" alt="enregistrer" /></button>
     {% endif %}
 {{ form_end(form) }}
