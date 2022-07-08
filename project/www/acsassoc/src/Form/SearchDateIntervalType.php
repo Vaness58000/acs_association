@@ -18,7 +18,8 @@ class SearchDateIntervalType extends AbstractType
             'attr' => [
                 'class' => 'form-control-plaintext'
             ],
-            'widget' => 'single_text'
+            'widget' => 'single_text',
+            'required' => false
 
         ])
         ->add('end', DateType::class, [
@@ -26,7 +27,8 @@ class SearchDateIntervalType extends AbstractType
             'attr' => [
                 'class' => 'form-control-plaintext'
             ],
-            'widget' => 'single_text'
+            'widget' => 'single_text',
+            'required' => false
         ])
         ->add('Rechercher', SubmitType::class, [
             'attr' => [

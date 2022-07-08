@@ -14,10 +14,7 @@ class TextEmailProduit
         $this->produits = $produits;
     }
 
-
-
-    public function html()
-    {
+    public function startHtml() {
         if(empty($this->produits)) {
             return "";
         }
@@ -35,7 +32,48 @@ class TextEmailProduit
         $text .= '</style>'."\n";
         $text .= '<p>'."\n";
         $text .= 'Bonjour,<br />'."\n";
-        $text .= 'C\'est la fin de la garantie pour les produits suivants  :<br />'."\n";
+        $text .= '</p>'."\n";
+        return $text;
+    }
+
+    public function startText() {
+        if(empty($this->produits)) {
+            return "";
+        }
+        $text = 'Bonjour,'."\n";
+        return $text;
+    }
+
+    public function endHtml() {
+        if(empty($this->produits)) {
+            return "";
+        }
+        $text = '<p>'."\n";
+        $text .= 'Cordialement.<br />'."\n";
+        $text .= '</p>'."\n";
+        return $text;
+    }
+
+    public function endText() {
+        if(empty($this->produits)) {
+            return "";
+        }
+        $text = 'Cordialement.<br />';
+        $text .= "\n";
+        return $text;
+    }
+
+    public function Tablehtml(bool $before = false)
+    {
+        if(empty($this->produits)) {
+            return "";
+        }
+        $text = '<p>'."\n";
+        if(!$before) {
+            $text .= 'C\'est la fin de la garantie pour les produits suivants  :<br />'."\n";
+        } else {
+            $text .= 'C\'est bientôt la fin de la garantie pour les produits suivants :<br />'."\n";
+        }
         $text .= '</p>'."\n";
         $text .= '<table>'."\n";
         $text .= '<thead>'."\n";
@@ -65,19 +103,20 @@ class TextEmailProduit
         }
         $text .= '</tbody>'."\n";
         $text .= '</table>'."\n";
-        $text .= '<p>'."\n";
-        $text .= 'Cordialement.<br />'."\n";
-        $text .= '</p>'."\n";
         return $text;
     }
 
-    public function text()
+    public function tableText(bool $before = false)
     {
         if(empty($this->produits)) {
             return "";
         }
-        $text = 'Bonjour,'."\n";
-        $text .= 'C\'est la fin de la garantie pour les produits suivants :'."\n";
+        $text = '';
+        if(!$before) {
+            $text .= 'C\'est la fin de la garantie pour les produits suivants :'."\n";
+        } else {
+            $text .= 'C\'est bientôt la fin de la garantie pour les produits suivants :'."\n";
+        }
         $text .= 'Id;';
         $text .= 'Nom;';
         $text .= 'Slug;';
@@ -98,8 +137,6 @@ class TextEmailProduit
             $text .= $produit->getCreatedAt()->format('d/m/Y').';';
             $text .= "\n";
         }
-        $text .= 'Cordialement.<br />';
-        $text .= "\n";
         return $text;
     }
 

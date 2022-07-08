@@ -68,6 +68,7 @@ window.onload = () => {
       }
     });
   });
+  
   document.querySelectorAll("#ticket").forEach((element) => {
     //selectionne la class [ou l'id]
     element.addEventListener("click", function (e) {
