@@ -94,7 +94,7 @@ class CategoriesController extends AbstractController
                 if($produit['categorie_name'] == $name) {
                     for ($j=0; $j < count($date) ; $j++) { 
                         if($date[$j] == $produit['dateProduits']) {
-                            $count[$j] = $produit['count'];
+                            $count[$j] += $produit['count'];
                         }
                     }
                     $color = $produit['color'];
@@ -112,6 +112,24 @@ class CategoriesController extends AbstractController
         $categories_produit_data['date'][] = $tabDate;
         $categories_produit_data['datas'][] = $categories_produit;
         return $categories_produit_data;
+    }
+
+    /**
+     * test la date
+     */
+    private function testDate($date, $from = null, $to = null): bool
+    {
+        if(!empty($from)) {
+            if($date < $from) {
+                return false;
+            }
+        }
+        if(!empty($to)) {
+            if($date > $to) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -134,10 +152,16 @@ class CategoriesController extends AbstractController
         $produits = $produitsRepository->countByDate();
         $produits2 = $produitsRepository->countPriceByDate();
 
+
+        $start = null;
+        $end = null;
+
         if($form->isSubmitted() && $form->isValid()){
-            $categories = $categoriesRepository->selectInterval($search->get('start')->getData(), $search->get('end')->getData());
-            $produits = $produitsRepository->countByDate($search->get('start')->getData(), $search->get('end')->getData());
-            $produits2 = $produitsRepository->countPriceByDate($search->get('start')->getData(), $search->get('end')->getData());
+            $start = $search->get('start')->getData();
+            $end = $search->get('end')->getData();
+            $categories = $categoriesRepository->selectInterval($start, $end);
+            $produits = $produitsRepository->countByDate($start, $end);
+            $produits2 = $produitsRepository->countPriceByDate($start, $end);
         }
 
         $categoriesJson = [];
@@ -149,12 +173,16 @@ class CategoriesController extends AbstractController
         foreach ($categories as $categorie) {
             $categoriesJson['name'][] = $categorie->getName();
             $categoriesJson['color'][] = $categorie->getColor();
-            $categoriesJson['count'][] = count($categorie->getProduits());
             $priceTotal = 0;
+            $count = 0;
             foreach ($categorie->getProduits() as $produit) {
-                $priceTotal += $produit->getPrice();
+                if($this->testDate($produit->getAchatAt(), $start, $end)) {
+                    $priceTotal += $produit->getPrice();
+                    $count++;
+                }
             }
             $categoriesJson['price'][] = $priceTotal;
+            $categoriesJson['count'][] = $count;
         }
 
         // On va chercher le nombre d'annonces publiées par date
@@ -163,7 +191,6 @@ class CategoriesController extends AbstractController
         
 
         return $this->render('categories/stats.html.twig', [
-            'categories' => $categoriesRepository->findAll(),
             'categoriesJson' => json_encode($categoriesJson),
             'produitsJson' => json_encode($categories_produit_data),
             'produitsJson2' => json_encode($categories_produit_data2),

@@ -101,7 +101,7 @@ class ProduitsRepository extends ServiceEntityRepository
             $query->andWhere('p.achat_at < :to')
                 ->setParameter(':to', $to);
         }
-        $query->groupBy('dateProduits')//, categorie_name
+        $query->groupBy('dateProduits, categorie_name')
             ->orderBy('c.name', 'ASC')
         ;
         return $query->getQuery()->getResult();
@@ -124,7 +124,7 @@ class ProduitsRepository extends ServiceEntityRepository
             $query->andWhere('p.achat_at < :to')
                 ->setParameter(':to', $to);
         }
-        $query->groupBy('dateProduits')//, categorie_name
+        $query->groupBy('dateProduits, categorie_name')
             ->orderBy('c.name', 'ASC')
         ;
        return $query->getQuery()->getResult();
