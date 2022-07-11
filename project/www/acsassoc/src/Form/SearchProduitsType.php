@@ -19,7 +19,7 @@ class SearchProduitsType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez un ou plussieurs mots-clés'
+                    'placeholder' => 'Entrez un ou plusieurs mots-clés'
                 ],
                 'required' => false
             ])
