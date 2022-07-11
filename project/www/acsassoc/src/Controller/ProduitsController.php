@@ -165,6 +165,7 @@ class ProduitsController extends AbstractController
             'produit' => $produit,
             'role_user' => $role,
             'isAdmin' => $isAdmin,
+            'user' => $user,
         ]);
     }
 

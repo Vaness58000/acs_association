@@ -152,17 +152,21 @@ input:focus, textarea:focus {
 input[type="file"] {
     display: none;
 }
+
 .eye_password{
     display: flex;
     flex-direction: row;
     align-items: center;
 }
+
 #add_img img{
     padding: 5px;
 }
+
 #manuel_bis{
     margin-top: 25px;
 }
+
 .bouton_profil{
     display: flex;
     flex-direction: row;
@@ -170,10 +174,17 @@ input[type="file"] {
     padding: 5px;
     align-items: center;
 }
+
 .bouton_profil a{
     margin-right: 5px;
     padding-bottom: 5px;
 }
+
+.table-show-td {
+    width: 220px;
+}
+
+
 
 
 /**********************/
@@ -191,6 +202,10 @@ input[type="file"] {
 @media screen and (max-width: 676px) {
     .col-pc {
         display: none;
+    }
+
+    .table-show-td {
+        width: 100px;
     }
 }
 

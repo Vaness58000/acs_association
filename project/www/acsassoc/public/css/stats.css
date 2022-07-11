@@ -3,8 +3,8 @@
 }*/
 
 #categories-sommes, #categories-number, #produitsCount, #produitsCount2 {
-    min-width: 518px;
-    width: 518px;
+    min-width: 546px;
+    width: 546px;
 }
 #graphs {
     display: flex;

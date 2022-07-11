@@ -76,6 +76,7 @@ class ProduitsRepository extends ServiceEntityRepository
             ->setFirstResult(($page * $limit) - $limit)
             ->setMaxResults($limit)
         ;
+        $query->orderBy('p.created_at', 'DESC');
         return $query->getQuery()->getResult();
     }
 
@@ -133,6 +134,7 @@ class ProduitsRepository extends ServiceEntityRepository
             ->setFirstResult(($page * $limit) - $limit)
             ->setMaxResults($limit)
         ;
+        $query->orderBy('p.created_at', 'DESC');
         return $query->getQuery()->getResult();
     }
 

@@ -70,6 +70,7 @@ class CategoriesRepository extends ServiceEntityRepository
             ->setFirstResult(($page * $limit) - $limit)
             ->setMaxResults($limit)
         ;
+        $query->orderBy('c.id', 'DESC');
         return $query->getQuery()->getResult();
     }
 

@@ -27,7 +27,7 @@
                     <td class="text-center col-pc">{{ produit.guaranteeAt ? produit.guaranteeAt|date('d/m/Y') : '' }}</td>
                     <td class="text-center col-mod-tel">{{ produit.price }}</td>
                     <td class="text-center">
-                        <div class="form-check form-switch text-center">
+                        <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" data-id="{{ produit.id }}" {{ (produit.active) ? "checked" : "" }}>
                         </div>
                     </td>

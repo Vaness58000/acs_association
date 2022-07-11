@@ -6,10 +6,10 @@
     <section class="container">
         <h1 class="text-center">Produits</h1>
 
-        <table class="table">
+        <table class="table table-show">
             <tbody>
                 <tr>
-                    <th>Id</th>
+                    <th class="table-show-td">Id</th>
                     <td>{{ produit.id }}</td>
                 </tr>
                 <tr>
@@ -22,11 +22,11 @@
                 </tr>
                 <tr>
                     <th>Date d'achat</th>
-                    <td>{{ produit.achatAt ? produit.achatAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ produit.achatAt ? produit.achatAt|date('d-m-Y') : '' }}</td>
                 </tr>
                 <tr>
                     <th>Date de fin de garantie</th>
-                    <td>{{ produit.guaranteeAt ? produit.guaranteeAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ produit.guaranteeAt ? produit.guaranteeAt|date('d-m-Y') : '' }}</td>
                 </tr>
                 <tr>
                     <th>Prix</th>
@@ -42,15 +42,21 @@
                 </tr>
                 <tr>
                     <th>Date de création</th>
-                    <td>{{ produit.createdAt ? produit.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ produit.createdAt ? produit.createdAt|date('d-m-Y') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Par</th>
+                    <td>{{ user.name }} {{ user.firstname }}</td>
                 </tr>
             </tbody>
         </table>
 
-        <a class="btn bg-light bg-gradient" href="{{ path('app_produits_index') }}"><img class="img-mod" src="{{ asset('img/revenir.svg')}}" alt="retour" /></a>
+        <div class="d-flex justify-content-center">
+        <a class="m-2 btn bg-light bg-gradient" href="{{ path('app_produits_index') }}"><img class="img-mod" src="{{ asset('img/revenir.svg')}}" alt="retour" /></a>
 
-        <a class="btn bg-light bg-gradient" href="{{ path('app_produits_edit', {'id': produit.id}) }}"><img class="img-mod" src="{{ asset('img/crayon.svg')}}" alt="modifier" /></a>
+        <a class="m-2 btn bg-light bg-gradient" href="{{ path('app_produits_edit', {'id': produit.id}) }}"><img class="img-mod" src="{{ asset('img/crayon.svg')}}" alt="modifier" /></a>
 
         {{ include('produits/_delete_form.html.twig') }}
+        </div>
     </sction>
 {% endblock %}
