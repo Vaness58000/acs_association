@@ -36,8 +36,8 @@
                   <div class="dropdown sub-menu"><p class="text-white">Admin</p></div>
                   <div id="sous-menu2" class="sous-menu">
                       <a class="dropdown-item" aria-current="page" href="{{ path('app_admin_users') }}">Utilisateurs</a>
-                      <a class="dropdown-item" href="{{ path('app_admin_produits_index') }}">Produits</a>
-                      <a class="dropdown-item" href="{{ path('app_categories_index') }}">Catégories</a>
+                      <a class="dropdown-item" href="{{ asset ('produits/?admin=admin') }}">Produits</a>
+                      <a class="dropdown-item" href="{{ asset ('categories/?admin=admin') }}">Catégories</a>
                   </div>
                   <div class="dropdown-divider"></div>
 

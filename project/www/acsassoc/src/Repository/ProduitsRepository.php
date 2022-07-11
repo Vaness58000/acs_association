@@ -64,6 +64,124 @@ class ProduitsRepository extends ServiceEntityRepository
     }
 
     /**
+     * 
+     */
+    public function getPaginatedProduitsUser($user, $page, $limit)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin('p.users', 'u');
+        $query->andWhere('u = :user')
+            ->setParameter(':user', $user);
+        $query->orderBy('p.created_at')
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $query->getQuery()->getResult();
+    }
+
+
+    /**
+     * Returns number of Annonces
+     * @return void 
+     */
+    public function getTotalProduitsUser($user){
+        $query = $this->createQueryBuilder('p')
+            ->select('COUNT(p)')
+            ->innerJoin('p.users', 'u');
+        $query->andWhere('u = :user')
+            ->setParameter(':user', $user);
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * 
+     */
+    public function getPaginatedProduits($page, $limit)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->where('p.active = 1');
+
+        $query->orderBy('p.created_at')
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $query->getQuery()->getResult();
+    }
+
+
+    /**
+     * Returns number of Annonces
+     * @return void 
+     */
+    public function getTotalProduits(){
+        $query = $this->createQueryBuilder('p')
+            ->select('COUNT(p)')
+            ->where('p.active = 1');
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * 
+     */
+    public function getPaginatedProduitsAdmin($page, $limit)
+    {
+        $query = $this->createQueryBuilder('p');
+
+        $query->orderBy('p.created_at')
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $query->getQuery()->getResult();
+    }
+
+
+    /**
+     * Returns number of Annonces
+     * @return void 
+     */
+    public function getTotalProduitsAdmin(){
+        $query = $this->createQueryBuilder('p')
+            ->select('COUNT(p)');
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * 
+     */
+    public function getPaginatedProduitsCategorie($categorie, $page, $limit)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin('p.categories', 'c')
+            ->where('p.active = 1');
+        $query->andWhere('c = :categorie')
+            ->setParameter(':categorie', $categorie);
+        $query->orderBy('p.created_at')
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $query->getQuery()->getResult();
+    }
+
+
+    /**
+     * Returns number of Annonces
+     * @return void 
+     */
+    public function getTotalProduitsCategorie($categorie){
+        $query = $this->createQueryBuilder('p')
+            ->select('COUNT(p)')
+            ->innerJoin('p.categories', 'c')
+            ->where('p.active = 1');
+        $query->andWhere('c = :categorie')
+            ->setParameter(':categorie', $categorie);
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
+    /**
      * Undocumented function
      *
      * @param [type] $mots

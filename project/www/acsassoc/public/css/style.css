@@ -147,11 +147,33 @@ input:focus, textarea:focus {
     margin-left: 15px;
 }
 
+input[type="file"] {
+    display: none;
+}
+
 /**********************/
 /** version < 991px ***/
 /**********************/
 @media screen and (max-width: 991px) {
     .dropdown-menu.show {
         margin-left: -103px;
+    }
+}
+
+/**********************/
+/** version < 676px ***/
+/**********************/
+@media screen and (max-width: 676px) {
+    .col-pc {
+        display: none;
+    }
+}
+
+/**********************/
+/** version < 444px ***/
+/**********************/
+@media screen and (max-width: 444px) {
+    .col-mod-tel {
+        display: none;
     }
 }

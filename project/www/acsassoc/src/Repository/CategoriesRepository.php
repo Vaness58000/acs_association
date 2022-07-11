@@ -59,6 +59,32 @@ class CategoriesRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * 
+     */
+    public function getPaginatedCategorie($page, $limit)
+    {
+        $query = $this->createQueryBuilder('c');
+
+        $query->orderBy('c.id')
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $query->getQuery()->getResult();
+    }
+
+
+    /**
+     * Returns number of Annonces
+     * @return void 
+     */
+    public function getTotalCategorie(){
+        $query = $this->createQueryBuilder('c')
+            ->select('COUNT(c)');
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Categories[] Returns an array of Categories objects
 //     */

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\SearchDateIntervalType;
-
+use App\ClassMain\ConfigSite;
 
 /**
  * @Route("/categories")
@@ -21,14 +21,28 @@ class CategoriesController extends AbstractController
     /**
      * @Route("/", name="app_categories_index", methods={"GET"})
      */
-    public function index(CategoriesRepository $categoriesRepository): Response
+    public function index(CategoriesRepository $categoriesRepository, Request $request): Response
     {
+        $config = new ConfigSite();
+
         $user = $this->getUser();
         $role = $user->getRoles()[0];
 
+        // on definit le nombre de d'elements par page
+        $limit = $config->getNb_row();
+
+        $page = (int)$request->query->get("page", 1);
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
+
+        $categories = $categoriesRepository->getPaginatedCategorie($page, $limit);
+        $pages = ceil($categoriesRepository->getTotalCategorie()/$limit);
+
         return $this->render('categories/index.html.twig', [
-            'categories' => $categoriesRepository->findAll(),
+            'categories' => $categories,
             'role_user' => $role,
+            'page' => $page,
+            'pages' => $pages,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -39,6 +53,8 @@ class CategoriesController extends AbstractController
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
+
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
 
         $category = new Categories();
         $form = $this->createForm(CategoriesType::class, $category, [
@@ -60,6 +76,7 @@ class CategoriesController extends AbstractController
             'category' => $category,
             'form' => $form,
             'role_user' => $role,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -202,14 +219,17 @@ class CategoriesController extends AbstractController
     /**
      * @Route("/{id}", name="app_categories_show", methods={"GET"})
      */
-    public function show(Categories $category): Response
+    public function show(Categories $category, Request $request): Response
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
+        
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
 
         return $this->render('categories/show.html.twig', [
             'category' => $category,
             'role_user' => $role,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -220,6 +240,8 @@ class CategoriesController extends AbstractController
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
+        
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
 
         $form = $this->createForm(CategoriesType::class, $category);
         $form->handleRequest($request);
@@ -234,6 +256,7 @@ class CategoriesController extends AbstractController
             'category' => $category,
             'form' => $form,
             'role_user' => $role,
+            'isAdmin' => $isAdmin,
         ]);
     }
 

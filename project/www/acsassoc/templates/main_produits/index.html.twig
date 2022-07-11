@@ -4,29 +4,39 @@
 
 {% block body %}
 <div class="container">
-    {{ form_start(form) }}
-        {{ form_widget(form.mots) }}
-        {{ form_widget(form.Rechercher) }}
-    {{ form_end(form) }}
-</div>
-<div class="container d-flex flex-wrap "> 
-{% for produit in produits %}
-{% if produit.active %}
- 
-  <div class="card m-3 justify-content-center " style="width: 18rem;">
-    <div>
-      <div class="card-body"><a href="{{ path('app_main_produits_show', {'id': produit.id}) }}">
-        <h5 class="card-title">{{produit.name}}</h5>
-      {% if produit.images is not empty %}
-       <img src="{{ asset('/uploads/img/'~produit.images[0].name) }}" alt="Image" width="150">
-      {% endif %}
-        <p class="card-text">{{produit.categories.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span>{{produit.price}}€</span></p>
-        <p class="card-text">{{produit.achatAt ? produit.achatAt|date('d/m/Y') : '' }}</p>
+      {{ form_start(form) }}
+          {{ form_widget(form.mots) }}
+          {{ form_widget(form.Rechercher) }}
+      {{ form_end(form) }}
+  </div>
+  <div class="container d-flex flex-wrap justify-content-center"> 
+  {% for produit in produits %}
+  {% if produit.active %}
+  
+    <div class="card m-3 justify-content-center " style="width: 18rem;">
+      <div>
+        <div class="card-body"><a href="{{ path('app_main_produits_show', {'id': produit.id}) }}">
+          <h5 class="card-title">{{produit.name}}</h5>
+        {% if produit.images is not empty %}
+        <img src="{{ asset('/uploads/img/'~produit.images[0].name) }}" alt="Image" width="150">
+        {% endif %}
+          <p class="card-text">{{produit.categories.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span>{{produit.price}}€</span></p>
+          <p class="card-text">{{produit.achatAt ? produit.achatAt|date('d/m/Y') : '' }}</p>
+        </div>
       </div>
     </div>
+  {% endif %}
+  {% endfor %}
   </div>
-{% endif %}
-{% endfor %}
-</div>
-
+  {% if pages > 1 %}
+    <div class="container">
+      <nav aria-label="Page navigation" class="d-flex justify-content-center">
+        <ul class="pagination">
+          {% for item in 1..pages %}
+            <li class="page-item {{ (page == item) ? 'active' : '' }}"><a class="page-link" href="?page={{ item }}">{{ item }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+  {% endif %}
 {% endblock %}
