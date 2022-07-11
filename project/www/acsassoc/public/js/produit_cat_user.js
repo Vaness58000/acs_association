@@ -11,9 +11,9 @@ document.querySelectorAll(".delete_produit").forEach(element => {
 document.querySelectorAll(".delete_categorie").forEach(element => {
     element.addEventListener("click", function(event){
         let deleteP = confirm('Are you sure you want to delete this item?');
-        let id = document.getElementById('id_categorie');
+        let id = document.getElementById('id_categorie').value;
         if(deleteP) {
-            //document.location.href="/produits/delete/"+id;
+            document.location.href="/categories/delete/"+id;
         }
     })
 }); 

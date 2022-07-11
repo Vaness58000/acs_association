@@ -132,6 +132,23 @@ class CategoriesController extends AbstractController
     }
 
     /**
+     * @Route("/delete/{id}", name="app_categories_delete", methods={"GET"})
+     */
+    public function delete(Request $request, Categories $category, CategoriesRepository $categoriesRepository): Response
+    {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
+        //if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+            $categoriesRepository->remove($category, true);
+        //}
+
+        return $this->redirectToRoute('app_categories_index', [
+            'role_user' => $role,
+        ], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
      * test la date
      */
     private function testDate($date, $from = null, $to = null): bool
@@ -258,22 +275,5 @@ class CategoriesController extends AbstractController
             'role_user' => $role,
             'isAdmin' => $isAdmin,
         ]);
-    }
-
-    /**
-     * @Route("/{id}", name="app_categories_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Categories $category, CategoriesRepository $categoriesRepository): Response
-    {
-        $user = $this->getUser();
-        $role = $user->getRoles()[0];
-
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            $categoriesRepository->remove($category, true);
-        }
-
-        return $this->redirectToRoute('app_categories_index', [
-            'role_user' => $role,
-        ], Response::HTTP_SEE_OTHER);
     }
 }
