@@ -7,8 +7,8 @@
     <section class="container">
         <h1 class="text-center">{{ produit.name }}</h1>
 
-        <div class="produit_ind d-flex">
-            <div class="float-start">
+        <div class="produit_ind d-flex flex-wrap justify-content-center">
+            <div class="flex-column">
                 {% if produit.images is not empty %}
                 <div class="row justify-content-center">
                     <div class="col-xs-6 col-sm-8 col-lg-10">
@@ -24,6 +24,7 @@
                     </div>
                 </div>
                 {% endif %}
+                  <div class="d-flex flex-end flex-wrap">
                 <div class="lien d-flex rounded float-start">
                 
                     {% if produit.ticketSrc != "" %}
@@ -37,11 +38,14 @@
                     <span>Manuel d'utilisation<br/>
                         <a href="{{ asset ('/uploads/files/'~ produit.manuelSrc) }}" target="_blank"><img class="img-pdf" src="{{ asset('img/logo_pdf.png')}}"> </a></span>
                     </div>
+            </div>
                     {% endif %}
                 </div> 
             </div>
+            
+           
             <div class="produit flex-wrap ">
-                <div class="">
+                <div class="float-end"><br/>
                     
                         <p>Prix : {{ produit.price }}€</p>
                         <p>Lieu d'achat : {{ produit.lieuAchat }}</p>
