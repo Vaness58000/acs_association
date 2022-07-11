@@ -65,7 +65,7 @@ form div label {
     color:black;
 }
 .produit{
-    width: 800px;
+    width: 500px;
     padding-left: 80px;
     padding-right: 80px;
     text-align: justify;
@@ -152,6 +152,29 @@ input:focus, textarea:focus {
 input[type="file"] {
     display: none;
 }
+.eye_password{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#add_img img{
+    padding: 5px;
+}
+#manuel{
+    margin-top: 25px;
+}
+.bouton_profil{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5px;
+    align-items: center;
+}
+.bouton_profil a{
+    margin-right: 5px;
+    padding-bottom: 5px;
+}
+
 
 /**********************/
 /** version < 991px ***/
@@ -177,5 +200,14 @@ input[type="file"] {
 @media screen and (max-width: 444px) {
     .col-mod-tel {
         display: none;
+    }
+}
+
+/**********************/
+/** version > 575px ***/
+/**********************/
+@media screen and (max-width: 575px) {
+    label{
+    text-align: left !important;  
     }
 }

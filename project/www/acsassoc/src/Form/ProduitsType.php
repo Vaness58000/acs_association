@@ -86,6 +86,7 @@ class ProduitsType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'accept' => 'image/gif, image/png, image/jpeg, image/bmp, image/webp',
+                    
                 ],
             ])
         ;
