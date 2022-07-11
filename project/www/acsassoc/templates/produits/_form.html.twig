@@ -146,6 +146,9 @@
         <button class="btn bg-light bg-gradient"><img class="img-mod imd-delet-prd" src="{{ asset('img/floppy.svg')}}" alt="enregistrer" /></button>
     {% endif %}
     <a class="btn bg-light bg-gradient" href="{{ path('app_produits_index') }}"><img class="img-mod" src="{{ asset('img/revenir.svg')}}" alt="retour" /></a>
+    {% if editor_mod %}
+        {{ include('produits/_delete_form.html.twig') }}
+    {% endif %}
 {{ form_end(form) }}
 
 {% block javascripts %}

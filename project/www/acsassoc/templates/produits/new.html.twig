@@ -6,7 +6,7 @@
     <section class="container">
         <h1 class="text-center">Création d'un nouveau produit</h1>
 
-        {{ include('produits/_form.html.twig') }}
+        {{ include('produits/_form.html.twig', {'editor_mod' : false}) }}
         
     </sction>
 {% endblock %}
