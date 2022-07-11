@@ -45,7 +45,7 @@ form div label {
 
 /*page produit individuel*/
 .produit_ind{
-    margin-top: 100px;
+    margin-top: 70px;
 
 }
 .img-pdf, .img-ticket{
@@ -65,7 +65,9 @@ form div label {
     color:black;
 }
 .produit{
-    padding-left: 400px;
+    width: 800px;
+    padding-left: 80px;
+    padding-right: 80px;
     text-align: justify;
 }
 .produit_img{
@@ -82,7 +84,7 @@ form div label {
     flex-direction: column;
 }
 .colonne_gauche{
-    width: 300px;
+    width: 200px;
     height: 150px;
     margin-top: 20px;
     margin: 4px, 4px;
