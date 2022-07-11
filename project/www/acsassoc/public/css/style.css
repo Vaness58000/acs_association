@@ -1,3 +1,7 @@
+body {
+    min-width: 320px;
+}
+
 .img-mod {
     width: 25px;
 }
@@ -127,4 +131,51 @@ input:focus, textarea:focus {
     border: rgb(180, 180, 180) 1px solid;
     border-radius: 5px;
     padding: 5px;
+}
+
+.dropdown-menu.show {
+    margin-left: -103px;
+}
+
+.menu {
+    list-style-type: none;
+}
+
+.sub-menu {
+    margin-left: 15px;
+}
+
+.sous-menu {
+    margin-left: 15px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/**********************/
+/** version < 991px ***/
+/**********************/
+@media screen and (max-width: 991px) {
+    .dropdown-menu.show {
+        margin-left: -103px;
+    }
+}
+
+/**********************/
+/** version < 676px ***/
+/**********************/
+@media screen and (max-width: 676px) {
+    .col-pc {
+        display: none;
+    }
+}
+
+/**********************/
+/** version < 444px ***/
+/**********************/
+@media screen and (max-width: 444px) {
+    .col-mod-tel {
+        display: none;
+    }
 }

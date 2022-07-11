@@ -44,7 +44,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
-                    'class' => 'registration_form_plainPassword form-control-plaintext',
+                    'class' => 'registration_form_plainPassword form-control-plaintext col-8',
 
                 ],
                 'constraints' => [

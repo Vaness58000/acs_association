@@ -43,64 +43,88 @@
     </div>
     {% if produit.manuelSrc =="" %}
         <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Manuel</label>
-        <div class="col-sm-10">
-        {{form_widget(form.manuel_src)}}
+            <label class="col-sm-2 col-form-label">Manuel</label>
+            <div class="col-sm-10">
+                {{form_widget(form.manuel_src)}}
+                <div>
+                    <label for="produits_manuel_src">
+                        <img src="{{asset('img/add_file.svg')}}" alt="ajouter un fichier PDF" width="55px;">
+                    </label>
+                    <div id="produits_manuel_name"></div>
+                </div>
+            </div>
         </div>
-    </div>
     {% else %}
-    <div id="manuel_src_id" class="form-group row">
-        <label class="col-sm-2 col-form-label">Manuel</label>
-        <div class="col-sm-10">
-        {{form_widget(form.manuel_src)}}
+        <div id="manuel_src_id" class="form-group row">
+            <label class="col-sm-2 col-form-label">Manuel</label>
+            <div class="col-sm-10">
+                {{form_widget(form.manuel_src)}}
+                <div>
+                    <label for="produits_manuel_src">
+                        <img src="{{asset('img/add_file.svg')}}" alt="ajouter un fichier PDF" width="55px;">
+                    </label>
+                    <div id="produits_manuel_name"></div>
+                </div>
+            </div>
         </div>
-    </div>
+        </div>
         <div id="manuel_src_img_id" class="form-group row">
-        <label class="col-sm-2 col-form-label">Manuel</label>
-        <div class="col-sm-10">
-        <img src="{{asset('img/logo_pdf.png')}}" alt="fichier PDF" width="55px;">
-        <a href="{{ path('produits_delete_manuel', {'id': produit.id}) }}" id="manuel"
-                data-delete data-token="{{ csrf_token('delete' ~ produit.id) }}">
-        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer"></a>{{ produit.manuelSrc }}
+            <label class="col-sm-2 col-form-label">Manuel</label>
+            <div class="col-sm-10">
+                <a href="{{ path('produits_delete_manuel', {'id': produit.id}) }}" id="manuel"
+                        data-delete data-token="{{ csrf_token('delete' ~ produit.id) }}">
+                <img src="{{asset('img/poubelle.svg')}}" alt="supprimer"></a>{{ produit.manuelSrc }}
+            </div>
         </div>
-        </div>
-    </div>
     {% endif %}
       
     {% if produit.ticketSrc == "" %}
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Ticket</label>
-        <div class="col-sm-10">
-        {{form_widget(form.ticket_src)}}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Ticket</label>
+            <div class="col-sm-10">
+                {{form_widget(form.ticket_src)}}
+                <div>
+                    <label for="produits_ticket_src">
+                        <img src="{{asset('img/add_file.svg')}}" alt="ajouter un ticket de caisse" width="55px;">
+                    </label>
+                    <div id="produits_ticket_name"></div>
+                </div>
+            </div>
         </div>
-    </div>
     {% else %}
-    <div id="ticket_src_id" class="form-group row">
-        <label class="col-sm-2 col-form-label">Ticket</label>
-        <div class="col-sm-10">
-        {{form_widget(form.ticket_src)}}
+        <div id="ticket_src_id" class="form-group row">
+            <label class="col-sm-2 col-form-label">Ticket</label>
+            <div class="col-sm-10">
+                {{form_widget(form.ticket_src)}}
+                <div>
+                    <label for="produits_ticket_src">
+                        <img src="{{asset('img/add_file.svg')}}" alt="ajouter un ticket de caisse" width="55px;">
+                    </label>
+                    <div id="produits_ticket_name"></div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div id="ticket_src_img_id" class="form-group row">
-        <label class="col-sm-2 col-form-label">Ticket</label>
-        <div class="col-sm-10">
-        <img src="{{asset('img/logo_ticket.png')}}" alt="ticket de caisse" width="55px;">
-        <a href="{{ path('produits_delete_ticket', {'id': produit.id}) }}" id="ticket" 
-                data-delete data-token="{{ csrf_token('delete' ~ produit.id) }}" >
-        <img src="{{asset('img/poubelle.svg')}}" alt="supprimer"></a>{{ produit.ticketSrc }}
+        <div id="ticket_src_img_id" class="form-group row">
+            <label class="col-sm-2 col-form-label">Ticket</label>
+            <div class="col-sm-10">
+                <a href="{{ path('produits_delete_ticket', {'id': produit.id}) }}" id="ticket" 
+                        data-delete data-token="{{ csrf_token('delete' ~ produit.id) }}" >
+                <img src="{{asset('img/poubelle.svg')}}" alt="supprimer"></a>{{ produit.ticketSrc }}
+            </div>
         </div>
-        </div>
-    </div>
     {% endif %}
     
       
-      <div class="form-group row">
+    <div class="form-group row">
         <label class="col-sm-2 col-form-label">Images</label>
         <div class="col-sm-10">
-        {{form_widget(form.images)}}
+            {{form_widget(form.images)}}
+            <label for="produits_images">
+                <img src="{{asset('img/add_img.svg')}}" alt="ticket de caisse" width="55px;">
+            </label>
+            <div id="add_img"></div>
         </div>
     </div>
-  <!--<label for="produits_manuel_src">test</label>-->
     {#verifier si la route est "produits_edit" on affiche les images#}
     {% if app.request.attributes.get('_route') == 'app_produits_edit' %}
         <h2>Images</h2>
@@ -121,4 +145,9 @@
     {% else %}
         <button class="btn bg-light bg-gradient"><img class="img-mod imd-delet-prd" src="{{ asset('img/floppy.svg')}}" alt="enregistrer" /></button>
     {% endif %}
+    <a class="btn bg-light bg-gradient" href="{{ path('app_produits_index') }}"><img class="img-mod" src="{{ asset('img/revenir.svg')}}" alt="retour" /></a>
 {{ form_end(form) }}
+
+{% block javascripts %}
+    <script src="{{ asset('js/produit_files.js')}}"></script>
+{% endblock %}

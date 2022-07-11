@@ -10,21 +10,21 @@
     <table class="table table-striped">
         <thead class="table-primary">
             <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Email vérifier</th>
-                <th>Roles</th>
+                <th class="align-middle col-mod-tel">Id</th>
+                <th class="align-middle col-pc">Nom</th>
+                <th class="align-middle col-pc">Prénom</th>
+                <th class="align-middle">Email</th>
+                <th class="align-middle">Email vérifié</th>
+                <th class="align-middle">Roles</th>
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             {% if id_user != user.id %}
                 <tr>
-                    <td class="align-middle">{{ user.id }}</td>
-                    <td class="align-middle">{{ user.name }}</td>
-                    <td class="align-middle">{{ user.firstname }}</td>
+                    <td class="align-middle col-mod-tel">{{ user.id }}</td>
+                    <td class="align-middle col-pc">{{ user.name }}</td>
+                    <td class="align-middle col-pc">{{ user.firstname }}</td>
                     <td class="align-middle">{{ user.email }}</td>
                     <td class="align-middle">
                         <div class="form-check form-switch">
@@ -48,6 +48,11 @@
                             {% else %}
                                 <option value="ROLE_DELETE">Supprimer</option>
                             {% endif %}
+                            {% if user.roles[0] == "ROLE_BANNED" %}
+                                <option value="ROLE_BANNED" selected>banni</option>
+                            {% else %}
+                                <option value="ROLE_BANNED">banni</option>
+                            {% endif %}
                         </select>
                     </td>
                 </tr>
@@ -62,6 +67,17 @@
 
     
 </sction>
+{% if pages > 1 %}
+  <div class="container">
+    <nav aria-label="Page navigation" class="d-flex justify-content-center">
+      <ul class="pagination">
+        {% for item in 1..pages %}
+          <li class="page-item {{ (page == item) ? 'active' : '' }}"><a class="page-link" href="?page={{ item }}">{{ item }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+{% endif %}
 {% endblock %}
 
 {% block javascripts %}

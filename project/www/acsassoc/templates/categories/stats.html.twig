@@ -7,13 +7,27 @@
 {% endblock %}
 
 {% block body %}
-    <section class="container">
+    <section class="container d-flex flex-wrap justify-content-center">
         <h1 class="text-center">Statistiques</h1>
 
         {{ form_start(form) }}
-            {{ form_widget(form.start) }}
-            {{ form_widget(form.end) }}
-            {{ form_widget(form.Rechercher) }}
+            <div class="row justify-content-center">
+                <div class="col-sm-5 form-group row">
+                    <label class="col-sm-2 col-form-label">Début</label>
+                    <div class="col-sm-7">
+                        {{ form_widget(form.start) }}
+                    </div>
+                </div>
+                <div class="col-sm-5 form-group row">
+                    <label class="col-sm-2 col-form-label">Fin</label>
+                    <div class="col-sm-7">
+                        {{ form_widget(form.end) }}
+                    </div>
+                </div>
+                <div class="col-sm-auto align-self-center">
+                    {{ form_widget(form.Rechercher) }}
+                </div>
+            </div>
         {{ form_end(form) }}
 
         <div id="graphs">

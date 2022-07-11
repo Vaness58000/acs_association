@@ -56,6 +56,32 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         $this->add($user, true);
     }
 
+    /**
+     * 
+     */
+    public function getPaginatedUsersAdmin($page, $limit)
+    {
+        $query = $this->createQueryBuilder('u');
+
+        $query->orderBy('u.id')
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $query->getQuery()->getResult();
+    }
+
+
+    /**
+     * Returns number of Annonces
+     * @return void 
+     */
+    public function getTotalUsersAdmin(){
+        $query = $this->createQueryBuilder('u')
+            ->select('COUNT(u)');
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Users[] Returns an array of Users objects
 //     */

@@ -1,43 +1,37 @@
 {% extends 'users.html.twig' %}
 
-{% block title %}Produits{% endblock %}
+{% block title %}{{ (isAdmin) ? 'Produits' : 'Mes produits' }}{% endblock %}
 
 {% block body %}
     <section class="container">
-        <h1 class="text-center"><a href="{{ path('app_produits_new') }}"><img class="img-mod" src="{{ asset('img/ajouter-contenu.svg')}}" alt="créer" /></a> Produits</h1>
+        <h1 class="text-center"><a href="{{ path('app_produits_new') }}"><img class="img-mod" src="{{ asset('img/ajouter-contenu.svg')}}" alt="créer" /></a> {{ (isAdmin) ? 'Produits' : 'Mes produits' }}</h1>
 
         <table class="table table-striped">
             <thead class="table-primary">
                 <tr>
-                    <th>Id</th>
-                    <th>Nom</th>
-                    <th>Slug</th>
-                    <th>Date d'achat</th>
-                    <th>Date de fin de garantie</th>
-                    <th>Prix</th>
-                    <th>Description</th>
-                    <th>Visible</th>
-                    <th>Date de création</th>
-                    <th>Actions</th>
+                    <th class="text-center col-mod-tel">Id</th>
+                    <th class="text-center">Nom</th>
+                    <th class="text-center col-pc">Date d'achat</th>
+                    <th class="text-center col-pc">Date de fin de garantie</th>
+                    <th class="text-center col-mod-tel">Prix</th>
+                    <th class="text-center">Visible</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for produit in produits %}
                 <tr>
-                    <td>{{ produit.id }}</td>
+                    <td class="text-center col-mod-tel">{{ produit.id }}</td>
                     <td>{{ produit.name }}</td>
-                    <td>{{ produit.slug }}</td>
-                    <td>{{ produit.achatAt ? produit.achatAt|date('d/m/Y') : '' }}</td>
-                    <td>{{ produit.guaranteeAt ? produit.guaranteeAt|date('d/m/Y') : '' }}</td>
-                    <td>{{ produit.price }}</td>
-                    <td>{{ produit.content|raw }}</td>
-                    <td>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input display_row custom-control-display colum_display" type="checkbox" data-id="{{ produit.id }}" {{ (produit.active) ? "checked" : "" }}>
+                    <td class="text-center col-pc">{{ produit.achatAt ? produit.achatAt|date('d/m/Y') : '' }}</td>
+                    <td class="text-center col-pc">{{ produit.guaranteeAt ? produit.guaranteeAt|date('d/m/Y') : '' }}</td>
+                    <td class="text-center col-mod-tel">{{ produit.price }}</td>
+                    <td class="text-center">
+                        <div class="form-check form-switch text-center">
+                            <input class="form-check-input" type="checkbox" data-id="{{ produit.id }}" {{ (produit.active) ? "checked" : "" }}>
                         </div>
                     </td>
-                    <td>{{ produit.createdAt ? produit.createdAt|date('d/m/Y') : '' }}</td>
-                    <td>
+                    <td class="text-center">
                         <a href="{{ path('app_produits_show', {'id': produit.id}) }}"><img class="img-mod" src="{{ asset('img/partage-des-competences-512.svg')}}" alt="visualiser" /></a>
                         <a href="{{ path('app_produits_edit', {'id': produit.id}) }}"><img class="img-mod" src="{{ asset('img/crayon.svg')}}" alt="modifier" /></a>
                     </td>
@@ -52,6 +46,17 @@
 
         
     </sction>
+    {% if pages > 1 %}
+      <div class="container">
+        <nav aria-label="Page navigation" class="d-flex justify-content-center">
+          <ul class="pagination">
+            {% for item in 1..pages %}
+                <li class="page-item {{ (page == item) ? 'active' : '' }}"><a class="page-link" href="?page={{ item }}{{ (isAdmin) ? '&amp;admin=admin' : '' }}">{{ item }}</a></li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </div>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}

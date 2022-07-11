@@ -1,5 +1,10 @@
+/*body {
+    min-width: 430px !important;
+}*/
+
 #categories-sommes, #categories-number, #produitsCount, #produitsCount2 {
-    width: 40%;
+    min-width: 518px;
+    width: 518px;
 }
 #graphs {
     display: flex;

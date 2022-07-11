@@ -8,8 +8,6 @@
 
         {{ include('produits/_form.html.twig', {'button_label': 'Update'}) }}
 
-        <a class="btn bg-light bg-gradient" href="{{ path('app_produits_index') }}"><img class="img-mod" src="{{ asset('img/revenir.svg')}}" alt="retour" /></a>
-
         {{ include('produits/_delete_form.html.twig') }}
     </sction>
 {% endblock %}
