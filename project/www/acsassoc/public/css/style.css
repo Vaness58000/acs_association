@@ -1,3 +1,7 @@
+body {
+    min-width: 320px;
+}
+
 .img-mod {
     width: 25px;
 }
@@ -41,7 +45,7 @@ form div label {
 
 /*page produit individuel*/
 .produit_ind{
-    margin-top: 100px;
+    margin-top: 70px;
 
 }
 .img-pdf, .img-ticket{
@@ -61,7 +65,9 @@ form div label {
     color:black;
 }
 .produit{
-    padding-left: 400px;
+    width: 500px;
+    padding-left: 80px;
+    padding-right: 80px;
     text-align: justify;
 }
 .produit_img{
@@ -78,7 +84,7 @@ form div label {
     flex-direction: column;
 }
 .colonne_gauche{
-    width: 300px;
+    width: 250px;
     height: 150px;
     margin-top: 20px;
     margin: 4px, 4px;
@@ -125,4 +131,98 @@ input:focus, textarea:focus {
     border: rgb(180, 180, 180) 1px solid;
     border-radius: 5px;
     padding: 5px;
+}
+
+.dropdown-menu.show {
+    margin-left: -103px;
+}
+
+.menu {
+    list-style-type: none;
+}
+
+.sub-menu {
+    margin-left: 15px;
+}
+
+.sous-menu {
+    margin-left: 15px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.eye_password{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#add_img img{
+    padding: 5px;
+}
+
+#manuel_bis{
+    margin-top: 25px;
+}
+
+.bouton_profil{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5px;
+    align-items: center;
+}
+
+.bouton_profil a{
+    margin-right: 5px;
+    padding-bottom: 5px;
+}
+
+.table-show-td {
+    width: 220px;
+}
+
+
+
+
+/**********************/
+/** version < 991px ***/
+/**********************/
+@media screen and (max-width: 991px) {
+    .dropdown-menu.show {
+        margin-left: -103px;
+    }
+}
+
+/**********************/
+/** version < 676px ***/
+/**********************/
+@media screen and (max-width: 676px) {
+    .col-pc {
+        display: none;
+    }
+
+    .table-show-td {
+        width: 100px;
+    }
+}
+
+/**********************/
+/** version < 444px ***/
+/**********************/
+@media screen and (max-width: 444px) {
+    .col-mod-tel {
+        display: none;
+    }
+}
+
+/**********************/
+/** version > 575px ***/
+/**********************/
+@media screen and (max-width: 575px) {
+    label{
+    text-align: left !important;  
+    }
 }

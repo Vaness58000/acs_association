@@ -6,14 +6,14 @@
     <section class="container">
         <h1 class="text-center">Produits</h1>
 
-        <table class="table">
+        <table class="table table-show">
             <tbody>
                 <tr>
-                    <th>Id</th>
+                    <th class="table-show-td">Id</th>
                     <td>{{ produit.id }}</td>
                 </tr>
                 <tr>
-                    <th>Name</th>
+                    <th>Nom</th>
                     <td>{{ produit.name }}</td>
                 </tr>
                 <tr>
@@ -21,36 +21,42 @@
                     <td>{{ produit.slug }}</td>
                 </tr>
                 <tr>
-                    <th>Achat_at</th>
-                    <td>{{ produit.achatAt ? produit.achatAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <th>Date d'achat</th>
+                    <td>{{ produit.achatAt ? produit.achatAt|date('d-m-Y') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>Guarantee_at</th>
-                    <td>{{ produit.guaranteeAt ? produit.guaranteeAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <th>Date de fin de garantie</th>
+                    <td>{{ produit.guaranteeAt ? produit.guaranteeAt|date('d-m-Y') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>Price</th>
-                    <td>{{ produit.price }}</td>
+                    <th>Prix</th>
+                    <td>{{ produit.price }} €</td>
                 </tr>
                 <tr>
-                    <th>Content</th>
-                    <td>{{ produit.content }}</td>
+                    <th>Description</th>
+                    <td>{{ produit.content|raw }}</td>
                 </tr>
                 <tr>
                     <th>Active</th>
                     <td>{{ produit.active ? 'Yes' : 'No' }}</td>
                 </tr>
                 <tr>
-                    <th>Created_at</th>
-                    <td>{{ produit.createdAt ? produit.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <th>Date de création</th>
+                    <td>{{ produit.createdAt ? produit.createdAt|date('d-m-Y') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Par</th>
+                    <td>{{ user.name }} {{ user.firstname }}</td>
                 </tr>
             </tbody>
         </table>
 
-        <a class="btn bg-light bg-gradient" href="{{ path('app_produits_index') }}"><img class="img-mod" src="{{ asset('img/revenir.svg')}}" alt="retour" /></a>
+        <div class="d-flex justify-content-center">
+        <a class="m-2 btn bg-light bg-gradient" href="{{ path('app_produits_index') }}"><img class="img-mod" src="{{ asset('img/revenir.svg')}}" alt="retour" /></a>
 
-        <a class="btn bg-light bg-gradient" href="{{ path('app_produits_edit', {'id': produit.id}) }}"><img class="img-mod" src="{{ asset('img/crayon.svg')}}" alt="modifier" /></a>
+        <a class="m-2 btn bg-light bg-gradient" href="{{ path('app_produits_edit', {'id': produit.id}) }}"><img class="img-mod" src="{{ asset('img/crayon.svg')}}" alt="modifier" /></a>
 
         {{ include('produits/_delete_form.html.twig') }}
+        </div>
     </sction>
 {% endblock %}

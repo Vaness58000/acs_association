@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use App\ClassMain\ConfigSite;
 
 /**
  * @Route("/produits")
@@ -20,14 +21,33 @@ class ProduitsController extends AbstractController
     /**
      * @Route("/", name="app_produits_index", methods={"GET"})
      */
-    public function index(ProduitsRepository $produitsRepository): Response
+    public function index(ProduitsRepository $produitsRepository, Request $request): Response
     {
+        $config = new ConfigSite();
+
+        // on definit le nombre de d'elements par page
+        $limit = $config->getNb_row();
+
+        $page = (int)$request->query->get("page", 1);
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
+
         $user = $this->getUser();
         $role = $user->getRoles()[0];
 
+        if($isAdmin) {
+            $produit = $produitsRepository->getPaginatedProduitsAdmin($page, $limit);
+            $pages = ceil($produitsRepository->getTotalProduitsAdmin()/$limit);
+        } else {
+            $produit = $produitsRepository->getPaginatedProduitsUser($user, $page, $limit);
+            $pages = ceil($produitsRepository->getTotalProduitsUser($user)/$limit);
+        }
+
         return $this->render('produits/index.html.twig', [
-            'produits' => $user->getProduits(),
+            'produits' => $produit,
             'role_user' => $role,
+            'page' => $page,
+            'pages' => $pages,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -38,6 +58,8 @@ class ProduitsController extends AbstractController
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
+
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
 
         $produit = new Produits();
         $form = $this->createForm(ProduitsType::class, $produit);
@@ -106,39 +128,44 @@ class ProduitsController extends AbstractController
             'produit' => $produit,
             'form' => $form,
             'role_user' => $role,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
+    // Route("/{id}", name="app_produits_delete", methods={"POST"})
     /**
-     * @Route("/testEndProduit", name="testEndProduit")
+     * 
+     * @Route("/delete/{id}", name="app_produits_delete", methods={"GET"})
      */
-    public function testEndGarantee(ProduitsRepository $produitsRepository){
-
+    public function delete(Request $request, Produits $produit, ProduitsRepository $produitsRepository): Response
+    {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
 
-        $endproduit = $produitsRepository->end_garantee();
+        //if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
+        $produitsRepository->remove($produit, true);
+        //}
 
-        dd($endproduit);
-
-        return $this->render('produits/test.html.twig', [
-            'endproduit' => $endproduit,
+        return $this->redirectToRoute('app_produits_index', [
             'role_user' => $role,
-        ]);
-        
+        ], Response::HTTP_SEE_OTHER);
     }
 
     /**
      * @Route("/{id}", name="app_produits_show", methods={"GET"})
      */
-    public function show(Produits $produit): Response
+    public function show(Produits $produit, Request $request): Response
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
+        
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
 
         return $this->render('produits/show.html.twig', [
             'produit' => $produit,
             'role_user' => $role,
+            'isAdmin' => $isAdmin,
+            'user' => $user,
         ]);
     }
 
@@ -149,6 +176,8 @@ class ProduitsController extends AbstractController
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
+        
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
 
         $form = $this->createForm(ProduitsType::class, $produit);
         $form->handleRequest($request);
@@ -215,22 +244,6 @@ class ProduitsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="app_produits_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Produits $produit, ProduitsRepository $produitsRepository): Response
-    {
-        $user = $this->getUser();
-        $role = $user->getRoles()[0];
-
-        if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
-            $produitsRepository->remove($produit, true);
-        }
-
-        return $this->redirectToRoute('app_produits_index', [
-            'role_user' => $role,
-        ], Response::HTTP_SEE_OTHER);
-    }
 
     /**
      * @Route("/supprime/image/{id}", name="produits_delete_image", methods={"GET", "DELETE"})

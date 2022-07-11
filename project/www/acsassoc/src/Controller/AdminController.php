@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Users;
+use App\ClassMain\ConfigSite;
 
 /**
  * @Route("/admin", name="app_admin_")
@@ -30,17 +32,29 @@ class AdminController extends AbstractController
     /**
      * @Route("/users", name="users")
      */
-    public function users(UsersRepository $usersRepository): Response
+    public function users(UsersRepository $usersRepository, Request $request): Response
     {
+        $config = new ConfigSite();
+
         $user = $this->getUser();
         $role = $user->getRoles()[0];
         $id_user = $user->getId();
 
+        // on definit le nombre de d'elements par page
+        $limit = $config->getNb_row();
+
+        $page = (int)$request->query->get("page", 1);
+
+        $users = $usersRepository->getPaginatedUsersAdmin($page, $limit);
+        $pages = ceil($usersRepository->getTotalUsersAdmin()/$limit);
+
         return $this->render('admin/users.html.twig', [
             'controller_name' => 'AdminController',
-            "users" => $usersRepository->findAll(),
+            "users" => $users,
             'role_user' => $role,
             'id_user' => $id_user,
+            'page' => $page,
+            'pages' => $pages,
         ]);
     }
 

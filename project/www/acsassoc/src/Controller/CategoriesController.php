@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\SearchDateIntervalType;
-
+use App\ClassMain\ConfigSite;
 
 /**
  * @Route("/categories")
@@ -21,14 +21,28 @@ class CategoriesController extends AbstractController
     /**
      * @Route("/", name="app_categories_index", methods={"GET"})
      */
-    public function index(CategoriesRepository $categoriesRepository): Response
+    public function index(CategoriesRepository $categoriesRepository, Request $request): Response
     {
+        $config = new ConfigSite();
+
         $user = $this->getUser();
         $role = $user->getRoles()[0];
 
+        // on definit le nombre de d'elements par page
+        $limit = $config->getNb_row();
+
+        $page = (int)$request->query->get("page", 1);
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
+
+        $categories = $categoriesRepository->getPaginatedCategorie($page, $limit);
+        $pages = ceil($categoriesRepository->getTotalCategorie()/$limit);
+
         return $this->render('categories/index.html.twig', [
-            'categories' => $categoriesRepository->findAll(),
+            'categories' => $categories,
             'role_user' => $role,
+            'page' => $page,
+            'pages' => $pages,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -39,6 +53,8 @@ class CategoriesController extends AbstractController
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
+
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
 
         $category = new Categories();
         $form = $this->createForm(CategoriesType::class, $category, [
@@ -60,6 +76,7 @@ class CategoriesController extends AbstractController
             'category' => $category,
             'form' => $form,
             'role_user' => $role,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -94,7 +111,7 @@ class CategoriesController extends AbstractController
                 if($produit['categorie_name'] == $name) {
                     for ($j=0; $j < count($date) ; $j++) { 
                         if($date[$j] == $produit['dateProduits']) {
-                            $count[$j] = $produit['count'];
+                            $count[$j] += $produit['count'];
                         }
                     }
                     $color = $produit['color'];
@@ -112,6 +129,41 @@ class CategoriesController extends AbstractController
         $categories_produit_data['date'][] = $tabDate;
         $categories_produit_data['datas'][] = $categories_produit;
         return $categories_produit_data;
+    }
+
+    /**
+     * @Route("/delete/{id}", name="app_categories_delete", methods={"GET"})
+     */
+    public function delete(Request $request, Categories $category, CategoriesRepository $categoriesRepository): Response
+    {
+        $user = $this->getUser();
+        $role = $user->getRoles()[0];
+
+        //if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+            $categoriesRepository->remove($category, true);
+        //}
+
+        return $this->redirectToRoute('app_categories_index', [
+            'role_user' => $role,
+        ], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * test la date
+     */
+    private function testDate($date, $from = null, $to = null): bool
+    {
+        if(!empty($from)) {
+            if($date < $from) {
+                return false;
+            }
+        }
+        if(!empty($to)) {
+            if($date > $to) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -134,10 +186,16 @@ class CategoriesController extends AbstractController
         $produits = $produitsRepository->countByDate();
         $produits2 = $produitsRepository->countPriceByDate();
 
+
+        $start = null;
+        $end = null;
+
         if($form->isSubmitted() && $form->isValid()){
-            $categories = $categoriesRepository->selectInterval($search->get('start')->getData(), $search->get('end')->getData());
-            $produits = $produitsRepository->countByDate($search->get('start')->getData(), $search->get('end')->getData());
-            $produits2 = $produitsRepository->countPriceByDate($search->get('start')->getData(), $search->get('end')->getData());
+            $start = $search->get('start')->getData();
+            $end = $search->get('end')->getData();
+            $categories = $categoriesRepository->selectInterval($start, $end);
+            $produits = $produitsRepository->countByDate($start, $end);
+            $produits2 = $produitsRepository->countPriceByDate($start, $end);
         }
 
         $categoriesJson = [];
@@ -149,12 +207,16 @@ class CategoriesController extends AbstractController
         foreach ($categories as $categorie) {
             $categoriesJson['name'][] = $categorie->getName();
             $categoriesJson['color'][] = $categorie->getColor();
-            $categoriesJson['count'][] = count($categorie->getProduits());
             $priceTotal = 0;
+            $count = 0;
             foreach ($categorie->getProduits() as $produit) {
-                $priceTotal += $produit->getPrice();
+                if($this->testDate($produit->getAchatAt(), $start, $end)) {
+                    $priceTotal += $produit->getPrice();
+                    $count++;
+                }
             }
             $categoriesJson['price'][] = $priceTotal;
+            $categoriesJson['count'][] = $count;
         }
 
         // On va chercher le nombre d'annonces publiées par date
@@ -163,7 +225,6 @@ class CategoriesController extends AbstractController
         
 
         return $this->render('categories/stats.html.twig', [
-            'categories' => $categoriesRepository->findAll(),
             'categoriesJson' => json_encode($categoriesJson),
             'produitsJson' => json_encode($categories_produit_data),
             'produitsJson2' => json_encode($categories_produit_data2),
@@ -175,14 +236,17 @@ class CategoriesController extends AbstractController
     /**
      * @Route("/{id}", name="app_categories_show", methods={"GET"})
      */
-    public function show(Categories $category): Response
+    public function show(Categories $category, Request $request): Response
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
+        
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
 
         return $this->render('categories/show.html.twig', [
             'category' => $category,
             'role_user' => $role,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -193,6 +257,8 @@ class CategoriesController extends AbstractController
     {
         $user = $this->getUser();
         $role = $user->getRoles()[0];
+        
+        $isAdmin = $request->query->get("admin", "user") == "admin" ? true : false;
 
         $form = $this->createForm(CategoriesType::class, $category);
         $form->handleRequest($request);
@@ -207,23 +273,7 @@ class CategoriesController extends AbstractController
             'category' => $category,
             'form' => $form,
             'role_user' => $role,
+            'isAdmin' => $isAdmin,
         ]);
-    }
-
-    /**
-     * @Route("/{id}", name="app_categories_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Categories $category, CategoriesRepository $categoriesRepository): Response
-    {
-        $user = $this->getUser();
-        $role = $user->getRoles()[0];
-
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            $categoriesRepository->remove($category, true);
-        }
-
-        return $this->redirectToRoute('app_categories_index', [
-            'role_user' => $role,
-        ], Response::HTTP_SEE_OTHER);
     }
 }

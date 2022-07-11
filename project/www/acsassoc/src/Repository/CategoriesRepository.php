@@ -41,9 +41,11 @@ class CategoriesRepository extends ServiceEntityRepository
 
     /**
      * Returns Annonces between 2 dates
+     * @return void 
      */
     public function selectInterval($from = null, $to = null){
         $query = $this->createQueryBuilder('c')
+            ->select('c')
             ->innerJoin('c.produits', 'p');
         if(!empty($from)) {
             $query->andWhere('p.achat_at > :from')
@@ -53,7 +55,35 @@ class CategoriesRepository extends ServiceEntityRepository
             $query->andWhere('p.achat_at < :to')
                 ->setParameter(':to', $to);
         }
+        $query->orderBy('c.name', 'ASC');
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * 
+     */
+    public function getPaginatedCategorie($page, $limit)
+    {
+        $query = $this->createQueryBuilder('c');
+
+        $query->orderBy('c.id')
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        $query->orderBy('c.id', 'DESC');
+        return $query->getQuery()->getResult();
+    }
+
+
+    /**
+     * Returns number of Annonces
+     * @return void 
+     */
+    public function getTotalCategorie(){
+        $query = $this->createQueryBuilder('c')
+            ->select('COUNT(c)');
+
+        return $query->getQuery()->getSingleScalarResult();
     }
 
 //    /**

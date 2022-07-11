@@ -5,3 +5,5 @@
 email = "no-reply@AcsAssociation.fr"
 name = "AcsAssociation"
 nb_jour = 2
+nb_prod = 6
+nb_row = 10

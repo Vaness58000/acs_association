@@ -5,56 +5,58 @@
 {% block body %}
 
     <section class="container">
-        <h1 class="text-center">Produits</h1>
+        <h1 class="text-center">{{ produit.name }}</h1>
 
-    <div class="produit_ind">
-        <div class="float-start">
-            {% if produit.images is not empty %}
-            <div class="row justify-content-center">
-                <div class="col-xs-6 col-sm-8 col-lg-10">
-                    <img id="big_image" src="{{ asset('/uploads/img/'~ produit.images[0].name) }}" alt="Image">
+        <div class="produit_ind d-flex flex-wrap justify-content-center">
+            <div class="flex-column">
+                {% if produit.images is not empty %}
+                <div class="row justify-content-center">
+                    <div class="col-xs-6 col-sm-8 col-lg-10">
+                        <img id="big_image" src="{{ asset('/uploads/img/'~ produit.images[0].name) }}" alt="Image">
+                    </div>
                 </div>
-            </div>
-            <div class="colonne_gauche  row">
-                <div class="col img-fluid">
-                    {% for image in produit.images %}
-                        <img class="produit_img img-fluid" src="{{ asset('/uploads/img/'~ image.name) }}" width="100px" alt="Image">
-          
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-            <div class="lien d-flex rounded float-start">
+                <div class="colonne_gauche row">
+                    <div class="col img-fluid">
+                        {% for image in produit.images %}
+                            <img class="produit_img img-fluid" src="{{ asset('/uploads/img/'~ image.name) }}" width="100px" alt="Image">
             
-                {% if produit.ticketSrc != "" %}
-                <div class="d-flex">
-                    <span>Ticket de caisse <br/>
-                    <a href="{{ asset ('/uploads/files/'~ produit.ticketSrc) }}" target="_blank"><img class="img-ticket" src="{{ asset('img/logo_ticket.png')}}"></a></span>
+                        {% endfor %}
+                    </div>
                 </div>
                 {% endif %}
-                {% if produit.ticketSrc != "" %}
-                <div class="d-flex">
-                <span>Manuel d'utilisation<br/>
-                    <a href="{{ asset ('/uploads/files/'~ produit.manuelSrc) }}" target="_blank"><img class="img-pdf" src="{{ asset('img/logo_pdf.png')}}"> </a></span>
-                </div>
-                {% endif %}
-            </div> 
-        </div>
-        <div class="produit col-sm-13 col-xs-6 col-md-10">
-            <div class="">
-        
-                    <p>{{ produit.name }} </p>
-                    <p>Prix : {{ produit.price }}€</p>
-                    <p>Lieu d'achat : {{ produit.lieuAchat }}</p>
-                    <p>Catégorie : {{produit.categories.name}}</p>
-                    <p>Date d'achat : {{ produit.achatAt ? produit.achatAt|date('d/m/Y') : '' }}</p>
-                    <p>Date de fin de garantie : {{ produit.guaranteeAt ? produit.guaranteeAt|date('d/m/Y') : '' }}</p>
-                    <p>{{ produit.content|raw }}</p>
-                    
+                  <div class="d-flex flex-end flex-wrap">
+                <div class="lien d-flex rounded float-start">
+                
+                    {% if produit.ticketSrc != "" %}
+                    <div class="d-flex">
+                        <span>Ticket de caisse <br/>
+                        <a href="{{ asset ('/uploads/files/'~ produit.ticketSrc) }}" target="_blank"><img class="img-ticket" src="{{ asset('img/logo_ticket.png')}}"></a></span>
+                    </div>
+                    {% endif %}
+                    {% if produit.ticketSrc != "" %}
+                    <div class="d-flex">
+                    <span>Manuel d'utilisation<br/>
+                        <a href="{{ asset ('/uploads/files/'~ produit.manuelSrc) }}" target="_blank"><img class="img-pdf" src="{{ asset('img/logo_pdf.png')}}"> </a></span>
+                    </div>
             </div>
-      
+                    {% endif %}
+                </div> 
+            </div>
+            
+           
+            <div class="produit flex-wrap ">
+                <div class="float-end"><br/>
+                    
+                        <p>Prix : {{ produit.price }}€</p>
+                        <p>Lieu d'achat : {{ produit.lieuAchat }}</p>
+                        <p>Catégorie : {{produit.categories.name}}</p>
+                        <p>Date d'achat : {{ produit.achatAt ? produit.achatAt|date('d/m/Y') : '' }}</p>
+                        <p>Date de fin de garantie : {{ produit.guaranteeAt ? produit.guaranteeAt|date('d/m/Y') : '' }}</p>
+                        <p>Description : {{ produit.content|raw }}</p>
+                        
+                </div>
+            </div>
         </div>
-    </div>
     </section>
   
 {% endblock %}
