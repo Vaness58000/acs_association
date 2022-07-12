@@ -8,7 +8,7 @@
 
 {% block body %}
     <section class="container">
-        <h1 class="text-center">Statistiques</h1>
+        <h1 class="title-stats text-center">Statistiques</h1>
 
         <div class="d-flex justify-content-center m-5">
             {{ form_start(form) }}
@@ -29,10 +29,10 @@
         </div>
 
         <div id="graphs">
-            <canvas id="produitsCount2"></canvas>
-            <canvas id="produitsCount"></canvas>
-            <canvas id="categories-sommes"></canvas>
-            <canvas id="categories-number"></canvas>
+            <canvas class="m-4" id="produitsCount2"></canvas>
+            <canvas class="m-4" id="produitsCount"></canvas>
+            <canvas class="m-4" id="categories-sommes"></canvas>
+            <canvas class="m-4" id="categories-number"></canvas>
         </div>
     </section>
 {% endblock %}
