@@ -52,6 +52,7 @@ class MainProduitsController extends AbstractController
             $produit = $produitsRepository->search(
                 $search->get('mots')->getData()
             );
+            $pages = 0;
         }
 
         return $this->render('main_produits/index.html.twig', [
@@ -100,6 +101,7 @@ class MainProduitsController extends AbstractController
                 $search->get('mots')->getData(),
                 $categorie
             );
+            $pages = 0;
         }
 
         return $this->render('main_produits/categorie.html.twig', [
