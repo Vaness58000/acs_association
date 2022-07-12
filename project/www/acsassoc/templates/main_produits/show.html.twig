@@ -15,7 +15,7 @@
                         <img id="big_image" src="{{ asset('/uploads/img/'~ produit.images[0].name) }}" alt="Image">
                     </div>
                 </div>
-                <div class="colonne_gauche row">
+                <div class="colonne_gauche justify-content-center">
                     <div class="col img-fluid">
                         {% for image in produit.images %}
                             <img class="produit_img img-fluid" src="{{ asset('/uploads/img/'~ image.name) }}" width="100px" alt="Image">
