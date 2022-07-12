@@ -49,10 +49,12 @@ class MainProduitsController extends AbstractController
         
         if($form->isSubmitted() && $form->isValid()){
             // On recherche les annonces correspondant aux mots clés
-            $produit = $produitsRepository->search(
+            $produit = $produitsRepository->getPaginatedProduits($page, $limit, $search->get('mots')->getData());
+            $pages = ceil($produitsRepository->getTotalProduits($search->get('mots')->getData())/$limit);
+            /*$produit = $produitsRepository->search(
                 $search->get('mots')->getData()
             );
-            $pages = 0;
+            $pages = 0;*/
         }
 
         return $this->render('main_produits/index.html.twig', [
@@ -63,6 +65,7 @@ class MainProduitsController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
     /**
      * @Route("/categorie", name="categorie")
      */
@@ -97,11 +100,13 @@ class MainProduitsController extends AbstractController
         
         if($form->isSubmitted() && $form->isValid()){
             // On recherche les annonces correspondant aux mots clés
-            $produit = $produitsRepository->search(
+            $produit = $produitsRepository->getPaginatedProduitsCategorie($categorie, $page, $limit, $search->get('mots')->getData());
+            $pages = ceil($produitsRepository->getTotalProduitsCategorie($categorie, $search->get('mots')->getData())/$limit);
+            /*$produit = $produitsRepository->search(
                 $search->get('mots')->getData(),
                 $categorie
             );
-            $pages = 0;
+            $pages = 0;*/
         }
 
         return $this->render('main_produits/categorie.html.twig', [

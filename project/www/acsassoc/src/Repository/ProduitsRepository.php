@@ -98,11 +98,17 @@ class ProduitsRepository extends ServiceEntityRepository
     /**
      * 
      */
-    public function getPaginatedProduits($page, $limit)
+    public function getPaginatedProduits($page, $limit, $mots = null, $categorie = null)
     {
         $query = $this->createQueryBuilder('p')
-            ->where('p.active = 1');
+            ->where('p.active = 1')
+            ->innerJoin('p.categories', 'c');
 
+        if($mots != null) {
+            $query->andWhere('MATCH_AGAINST(p.name, p.content) AGAINST (:mots boolean) > 0 OR MATCH_AGAINST(c.name) AGAINST (:mots boolean) > 0')
+                ->setParameter('mots', $mots);
+        }
+        
         $query->orderBy('p.created_at')
             ->setFirstResult(($page * $limit) - $limit)
             ->setMaxResults($limit)
@@ -115,10 +121,16 @@ class ProduitsRepository extends ServiceEntityRepository
      * Returns number of Annonces
      * @return void 
      */
-    public function getTotalProduits(){
+    public function getTotalProduits($mots = null, $categorie = null){
         $query = $this->createQueryBuilder('p')
+            ->innerJoin('p.categories', 'c')
+        
             ->select('COUNT(p)')
             ->where('p.active = 1');
+        if($mots != null) {
+            $query->andWhere('MATCH_AGAINST(p.name, p.content) AGAINST (:mots boolean) > 0 OR MATCH_AGAINST(c.name) AGAINST (:mots boolean) > 0')
+                ->setParameter('mots', $mots);
+        }
 
         return $query->getQuery()->getSingleScalarResult();
     }
@@ -153,11 +165,15 @@ class ProduitsRepository extends ServiceEntityRepository
     /**
      * 
      */
-    public function getPaginatedProduitsCategorie($categorie, $page, $limit)
+    public function getPaginatedProduitsCategorie($categorie, $page, $limit, $mots = null)
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin('p.categories', 'c')
             ->where('p.active = 1');
+        if($mots != null) {
+            $query->andWhere('MATCH_AGAINST(p.name, p.content) AGAINST (:mots boolean) > 0 OR MATCH_AGAINST(c.name) AGAINST (:mots boolean) > 0')
+                ->setParameter('mots', $mots);
+        }
         $query->andWhere('c = :categorie')
             ->setParameter(':categorie', $categorie);
         $query->orderBy('p.created_at')
@@ -172,11 +188,15 @@ class ProduitsRepository extends ServiceEntityRepository
      * Returns number of Annonces
      * @return void 
      */
-    public function getTotalProduitsCategorie($categorie){
+    public function getTotalProduitsCategorie($categorie, $mots = null){
         $query = $this->createQueryBuilder('p')
             ->select('COUNT(p)')
             ->innerJoin('p.categories', 'c')
             ->where('p.active = 1');
+        if($mots != null) {
+            $query->andWhere('MATCH_AGAINST(p.name, p.content) AGAINST (:mots boolean) > 0 OR MATCH_AGAINST(c.name) AGAINST (:mots boolean) > 0')
+                ->setParameter('mots', $mots);
+        }
         $query->andWhere('c = :categorie')
             ->setParameter(':categorie', $categorie);
 
