@@ -48,9 +48,17 @@ class AdminController extends AbstractController
         $users = $usersRepository->getPaginatedUsersAdmin($page, $limit);
         $pages = ceil($usersRepository->getTotalUsersAdmin()/$limit);
 
+        $tabUsers = [];
+        
+        foreach ($users as $value) {
+            if($id_user != $value->getId()) {
+                $tabUsers[] = $value;
+            }
+        }
+
         return $this->render('admin/users.html.twig', [
             'controller_name' => 'AdminController',
-            "users" => $users,
+            "users" => $tabUsers,
             'role_user' => $role,
             'id_user' => $id_user,
             'page' => $page,

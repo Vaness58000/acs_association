@@ -20,7 +20,6 @@
         </thead>
         <tbody>
         {% for user in users %}
-            {% if id_user != user.id %}
                 <tr>
                     <td class="align-middle col-mod-tel">{{ user.id }}</td>
                     <td class="align-middle col-pc">{{ user.name }}</td>
@@ -56,10 +55,9 @@
                         </select>
                     </td>
                 </tr>
-            {% endif %}
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">Il n'y a pas d'utilisateur</td>
             </tr>
         {% endfor %}
         </tbody>
