@@ -1,4 +1,4 @@
-FROM php:fpm
+FROM php:8.2.10-fpm
 
 VOLUME "/home/project"
 WORKDIR "/home/project"
@@ -54,7 +54,7 @@ RUN docker-php-ext-install imap
 WORKDIR "/tmp"
 
 # Install composer  
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer  
+COPY --from=composer:2.6.3 /usr/bin/composer /usr/bin/composer  
 RUN mkdir /var/composer  
 ENV COMPOSER_HOME /var/composer  
 ENV COMPOSER_ALLOW_SUPERUSER 1 
